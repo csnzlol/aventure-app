@@ -13,7 +13,7 @@ export default function RegisterScreen() {
       console.log('Wachtwoorden komen niet overeen');
       return;
     }
-    console.log('Registreren met:', email, password); 
+    console.log('Registreren met:', email, password);
   };
 
   return (
