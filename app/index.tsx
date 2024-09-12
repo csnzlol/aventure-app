@@ -27,7 +27,7 @@ export default function Index() {
       {/* Button to navigate to Account Recovery */}
       <TouchableOpacity
         style={styles.loginButton}
-        onPress={() => router.push('/AccountRecovery')}
+        onPress={() => router.push('/passwordrecovery')}
       >
         <Text style={styles.loginButtonText}>Account Herstel</Text>
       </TouchableOpacity>
