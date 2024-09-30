@@ -31,6 +31,14 @@ export default function Index() {
       >
         <Text style={styles.loginButtonText}>Account Herstel</Text>
       </TouchableOpacity>
+
+      {/* Button to navigate to Homepage */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/home')}
+      >
+        <Text style={styles.loginButtonText}>Home</Text>
+      </TouchableOpacity>
     </View>
   );
 }
