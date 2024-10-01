@@ -26,7 +26,7 @@ export default function Home() {
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <MaterialIcons name="fitness-center" size={24} color="gray" />
+          <MaterialIcons name="fitness-center" size={24} color="lightblue" />
           <Text style={styles.navText}>Workouts</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
