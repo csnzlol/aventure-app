@@ -1,22 +1,45 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
-import Home from '..//app/home';
-import Workouts from '../app/workouts';
-import Settings from '../app/settings';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
-const Tab = createBottomTabNavigator();
+export default function Index() {
+  const router = useRouter();
 
-export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Workouts" component={Workouts} />
-        <Tab.Screen name="Settings" component={Settings} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Edit app/index.tsx to edit this screen.</Text>
+      
+      {/* Button to navigate to Login */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/login')}
+      >
+        <Text style={styles.loginButtonText}>Go to Login</Text>
+      </TouchableOpacity>
+      
+      {/* Button to navigate to Register */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/register')}
+      >
+        <Text style={styles.loginButtonText}>Go to Register</Text>
+      </TouchableOpacity>
+
+      {/* Button to navigate to Account Recovery */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/passwordrecovery')}
+      >
+        <Text style={styles.loginButtonText}>Account Herstel</Text>
+      </TouchableOpacity>
+
+      {/* Button to navigate to the homepage  */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/home')}
+      >
+        <Text style={styles.loginButtonText}></Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
