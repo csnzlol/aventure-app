@@ -37,7 +37,7 @@ export default function Index() {
         style={styles.loginButton}
         onPress={() => router.push('/home')}
       >
-        <Text style={styles.loginButtonText}></Text>
+        <Text style={styles.loginButtonText}>Home</Text>
       </TouchableOpacity>
     </View>
   );
