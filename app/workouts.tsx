@@ -26,7 +26,7 @@ export default function Home() {
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <MaterialIcons name="fitness-center" size={24} color="gray" />
+          <MaterialIcons name="fitness-center" size={24} color="lightblue" />
           <Text style={styles.navText}>Workouts</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navText: {
-    color: 'gray', // Gray text for navigation items
+    color: 'grey', // Gray text for navigation items
     fontSize: 14,
     marginTop: 4, // Spacing between icon and text
   },

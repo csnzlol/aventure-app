@@ -1,8 +1,12 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; // For icons, you can use any icon library
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from './types'; // Import the types
 
 export default function Home() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <ImageBackground
       source={require('../assets/images/osiris_achtergrond.jpg')}
@@ -21,15 +25,15 @@ export default function Home() {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <MaterialIcons name="home" size={24} color="gray" />
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
+          <MaterialIcons name="home" size={24} color="lightblue" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
           <MaterialIcons name="fitness-center" size={24} color="gray" />
           <Text style={styles.navText}>Workouts</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
           <MaterialIcons name="settings" size={24} color="gray" />
           <Text style={styles.navText}>Settings</Text>
         </TouchableOpacity>
@@ -45,67 +49,58 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 20,
+    justifyContent: 'flex-start', // Align items to the start of the container
+    alignItems: 'flex-start', // Align items to the start of the container
+    padding: 20, // Add padding to the container
   },
   header: {
     fontSize: 24,
-    color: '#FFFFFF',
-    marginTop: 50,
-    marginBottom: 10,
-    fontWeight: 'bold',
-    textShadowColor: '#555555',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
+    color: '#FFFFFF', // White color for the header text
+    marginBottom: 10, // Margin below the header
+    fontWeight: 'bold', // Make the text bold
+    textShadowColor: '#555555', // Dark gray shadow color
+    textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+    textShadowRadius: 4, // Shadow radius
   },
   subHeader: {
     fontSize: 16,
-    color: '#E4E4E4',
-    marginBottom: 20,
-    fontWeight: 'bold',
-    textShadowColor: '#555555',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
+    color: '#E4E4E4', // Light gray color for the subheader text
+    marginBottom: 20, // Margin below the subheader
+    fontWeight: 'bold', // Make the text bold
+    textShadowColor: '#555555', // Dark gray shadow color
+    textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+    textShadowRadius: 4, // Shadow radius
   },
   loginBox: {
-    width: 161,
-    height: 209,
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    marginTop: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 161, // Set a smaller width
+    height: 209, // Set a smaller height
+    padding: 20, // Add padding inside the box
+    backgroundColor: '#FFFFFF', // Solid white background
+    borderRadius: 20, // Rounded corners
+    marginTop: 50, // Increase margin from the top to move it down
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
   },
   loginTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'center', // Center the text horizontally
   },
-  // Bottom Navigation Bar styles
   bottomNav: {
-    position: 'absolute',
-    bottom: 20, // Move it up a bit from the bottom to make it look like it's floating
-    left: 20, // Add spacing from the sides for the floating effect
-    right: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#FFFFFF', // White background for the nav bar
-    paddingVertical: 15, // Padding for vertical space
-    borderRadius: 30, // Rounded corners for the floating effect
-    shadowColor: '#000', // Shadow color for the floating effect
-    shadowOffset: { width: 0, height: 5 }, // Shadow offset to make it float
-    shadowOpacity: 0.15, // Slight shadow opacity
-    shadowRadius: 10, // Blur effect for the shadow
-    elevation: 10, // Android shadow elevation
+    padding: 10,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E4E4E4',
   },
   navItem: {
     alignItems: 'center',
   },
   navText: {
-    color: 'gray', // Gray text for navigation items
-    fontSize: 14,
-    marginTop: 4, // Spacing between icon and text
+    color: 'gray',
+  },
+  navTextActive: {
+    color: '#007BFF', // Light blue text
   },
 });
