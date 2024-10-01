@@ -5,7 +5,32 @@ import { useRouter } from 'expo-router';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Use router to navigate programmatically
+  const router = useRouter();
+
+  const handleLogin = () => {
+    fetch('http://your-ec2-public-ip/api/login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'Login successful') {
+          console.log('Login successful');
+          router.push('/home'); // Redirect to main page after login
+        } else {
+          console.log(data.message); // Show error message
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <ImageBackground
@@ -13,7 +38,6 @@ export default function LoginScreen() {
       style={styles.background}
     >
       <View style={styles.container}>
-        {/* Login Form */}
         <View style={styles.loginBox}>
           <Text style={styles.loginTitle}>Login Account</Text>
 
@@ -25,7 +49,7 @@ export default function LoginScreen() {
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9"
           />
 
           {/* Password field */}
@@ -35,13 +59,13 @@ export default function LoginScreen() {
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9"
           />
 
           {/* Login Button */}
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => console.log('Login button pressed')} // Handle login logic here
+            onPress={handleLogin} // Trigger API call for login
           >
             <Text style={styles.loginButtonText}>LOG IN</Text>
           </TouchableOpacity>

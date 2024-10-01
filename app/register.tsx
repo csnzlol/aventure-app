@@ -6,6 +6,7 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
   const router = useRouter();
 
   const handleRegister = () => {
@@ -13,7 +14,31 @@ export default function RegisterScreen() {
       console.log('Wachtwoorden komen niet overeen');
       return;
     }
-    console.log('Registreren met:', email, password);
+
+    // Make API request to PHP backend to register the user
+    fetch('http://your-ec2-public-ip/api/register.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: userName,  // Include name for registration
+        email,
+        password,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === 'User registered successfully') {
+          console.log('Registration successful');
+          router.push('/login'); // Redirect to login page
+        } else {
+          console.log(data.message); // Show error message
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -22,9 +47,18 @@ export default function RegisterScreen() {
       style={styles.background}
     >
       <View style={styles.container}>
-        {/* Register Form */}
         <View style={styles.registerBox}>
           <Text style={styles.registerTitle}>Maak Een Account</Text>
+
+          {/* User Name field */}
+          <TextInput
+            style={styles.input}
+            placeholder="Voornaam"
+            value={userName}
+            onChangeText={setUserName}
+            placeholderTextColor="#A9A9A9"
+            autoCapitalize="none"
+          />
 
           {/* E-mail field */}
           <TextInput
@@ -32,7 +66,7 @@ export default function RegisterScreen() {
             placeholder="E-Mail"
             value={email}
             onChangeText={setEmail}
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9"
             keyboardType="email-address"
             autoCapitalize="none"
           />
@@ -43,7 +77,7 @@ export default function RegisterScreen() {
             placeholder="Wachtwoord"
             value={password}
             onChangeText={setPassword}
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9"
             secureTextEntry
           />
 
@@ -53,7 +87,7 @@ export default function RegisterScreen() {
             placeholder="Herhaal Wachtwoord"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9"
             secureTextEntry
           />
 
