@@ -32,7 +32,7 @@ export default function Index() {
         <Text style={styles.loginButtonText}>Account Herstel</Text>
       </TouchableOpacity>
 
-      {/* Button to navigate to Homepage */}
+      {/* Button to navigate to the homepage  */}
       <TouchableOpacity
         style={styles.loginButton}
         onPress={() => router.push('/home')}
@@ -48,17 +48,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   loginButton: {
-    backgroundColor: "#007BFF",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: '#007BFF',
+    padding: 10,
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 10,
   },
   loginButtonText: {
-    color: "white",
+    color: '#FFFFFF',
     fontSize: 16,
-    textAlign: "center",
   },
 });
