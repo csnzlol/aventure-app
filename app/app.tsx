@@ -2,7 +2,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../Home';
+import Home from './Home';
 import Workouts from './Workouts';
 import Settings from './Settings';
 
