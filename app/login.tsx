@@ -5,10 +5,10 @@ import { useRouter } from 'expo-router';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
+  const router = useRouter(); // Use router to navigate programmatically
 
   const handleLogin = () => {
-    fetch('http://your-ec2-public-ip/api/login.php', {
+    fetch('http://13.38.123.253/api/login.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -3,10 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } 
 import { useRouter } from 'expo-router';
 
 export default function RegisterScreen() {
+  const [userName, setUserName] = useState(''); // State for the Name
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('');
   const router = useRouter();
 
   const handleRegister = () => {
@@ -16,7 +16,7 @@ export default function RegisterScreen() {
     }
 
     // Make API request to PHP backend to register the user
-    fetch('http://your-ec2-public-ip/api/register.php', {
+    fetch('http://13.38.123.253/api/register.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,14 +50,14 @@ export default function RegisterScreen() {
         <View style={styles.registerBox}>
           <Text style={styles.registerTitle}>Maak Een Account</Text>
 
-          {/* User Name field */}
+          {/* Name field */}
           <TextInput
             style={styles.input}
-            placeholder="Voornaam"
+            placeholder="Voornaam"  // Placeholder for the user's first name
             value={userName}
             onChangeText={setUserName}
             placeholderTextColor="#A9A9A9"
-            autoCapitalize="none"
+            autoCapitalize="words"
           />
 
           {/* E-mail field */}
