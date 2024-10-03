@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; // For icons
 import StepCounter from '../components/StepCounter'; // Import the step counter component
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -65,7 +65,7 @@ export default function Home({ navigation }: Props) {
 
         {/* New Workouts Section */}
         <Text style={styles.workoutHeader}>Ontdek nieuwe workouts</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
           {workoutImages.map((workout) => (
             <TouchableOpacity
               key={workout.id}
@@ -170,9 +170,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   workoutImage: {
-    width: 200,
-    height: 150,
-    borderRadius: 10,
+    width: Dimensions.get('window').width * 0.85, // Use 85% of the screen width for each image
+    height: 200, // Adjust height as necessary
+    borderRadius: 5,
   },
   workoutTitle: {
     fontSize: 16,
