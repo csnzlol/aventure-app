@@ -1,6 +1,7 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // For icons, you can use any icon library
+import { MaterialIcons } from '@expo/vector-icons'; // For icons
+import StepCounter from '../components/StepCounter'; // Import the step counter component
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 
@@ -27,29 +28,49 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.header}>Goedemorgen Sam</Text>
+        <Text style={styles.header}>Goedemorgen, Sam</Text>
         <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
-        
-        {/* Login Form */}
-        <View style={styles.loginBox}>
-          <Text style={styles.loginTitle}>Afgewerkt</Text>
-        </View>
-      </View>
 
-      {/* Bottom Navigation Bar */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-          <MaterialIcons name="home" size={24} color="gray" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
-          <MaterialIcons name="fitness-center" size={24} color="gray" />
-          <Text style={styles.navText}>Workouts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
-          <MaterialIcons name="settings" size={24} color="gray" />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
+        {/* Status Boxes */}
+        <View style={styles.statusContainer}>
+          <View style={styles.row}>
+            {/* Afgewerkt */}
+            <View style={styles.statusBox}>
+              <Text style={styles.statusTitle}>Afgewerkt</Text>
+              <Text style={styles.statusValue}>💪</Text>
+            </View>
+
+            {/* In Uitvoering */}
+            <View style={styles.statusBox}>
+              <Text style={styles.statusTitle}>In Uitvoering</Text>
+              <StepCounter />
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            {/* Bestede Tijd */}
+            <View style={styles.statusBox}>
+              <Text style={styles.statusTitle}>Bestede Tijd</Text>
+              <Text style={styles.statusValue}>⏱</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Bottom Navigation Bar */}
+        <View style={styles.bottomNav}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
+            <MaterialIcons name="home" size={24} color="gray" />
+            <Text style={styles.navText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
+            <MaterialIcons name="fitness-center" size={24} color="gray" />
+            <Text style={styles.navText}>Workouts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
+            <MaterialIcons name="settings" size={24} color="gray" />
+            <Text style={styles.navText}>Settings</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -85,44 +106,59 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
   },
-  loginBox: {
-    width: 161,
-    height: 209,
-    padding: 20,
+  statusContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  statusBox: {
+    width: '47%',
+    height: 100,
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    marginTop: 50,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 5,
   },
-  loginTitle: {
-    fontSize: 20,
+  statusTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
+    marginBottom: 5,
   },
-  // Bottom Navigation Bar styles
+  statusValue: {
+    fontSize: 28,
+  },
   bottomNav: {
     position: 'absolute',
-    bottom: 20, // Move it up a bit from the bottom to make it look like it's floating
-    left: 20, // Add spacing from the sides for the floating effect
+    bottom: 20,
+    left: 20,
     right: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#FFFFFF', // White background for the nav bar
-    paddingVertical: 15, // Padding for vertical space
-    borderRadius: 30, // Rounded corners for the floating effect
-    shadowColor: '#000', // Shadow color for the floating effect
-    shadowOffset: { width: 0, height: 5 }, // Shadow offset to make it float
-    shadowOpacity: 0.15, // Slight shadow opacity
-    shadowRadius: 10, // Blur effect for the shadow
-    elevation: 10, // Android shadow elevation
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 15,
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 10,
   },
   navItem: {
     alignItems: 'center',
   },
   navText: {
-    color: 'gray', // Gray text for navigation items
+    color: 'gray',
     fontSize: 14,
-    marginTop: 4, // Spacing between icon and text
+    marginTop: 4,
   },
 });
