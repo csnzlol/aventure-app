@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; // For icons
 import StepCounter from '../components/StepCounter'; // Import the step counter component
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,6 +10,7 @@ type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
   Settings: undefined;
+  WorkoutDetail: { exerciseId: string }; // Add this for workout detail navigation
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -21,6 +22,12 @@ type Props = {
 };
 
 export default function Home({ navigation }: Props) {
+  const workoutImages = [
+    { id: '1', title: 'Push Ups', image: require('../assets/workouts/pushups.jpg') },
+    { id: '2', title: 'Squats', image: require('../assets/workouts/squats.jpg') },
+    { id: '3', title: 'Pull Ups', image: require('../assets/workouts/pullups.jpg') },
+  ];
+
   return (
     <ImageBackground
       source={require('../assets/images/osiris_achtergrond.jpg')}
@@ -55,6 +62,21 @@ export default function Home({ navigation }: Props) {
             </View>
           </View>
         </View>
+
+        {/* New Workouts Section */}
+        <Text style={styles.workoutHeader}>Ontdek nieuwe workouts</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {workoutImages.map((workout) => (
+            <TouchableOpacity
+              key={workout.id}
+              onPress={() => navigation.navigate('WorkoutDetail', { exerciseId: workout.id })}
+              style={styles.workoutImageContainer}
+            >
+              <Image source={workout.image} style={styles.workoutImage} />
+              <Text style={styles.workoutTitle}>{workout.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
@@ -136,6 +158,28 @@ const styles = StyleSheet.create({
   },
   statusValue: {
     fontSize: 28,
+  },
+  workoutHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+    color: '#fff',
+  },
+  workoutImageContainer: {
+    marginRight: 20,
+  },
+  workoutImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 10,
+  },
+  workoutTitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   bottomNav: {
     position: 'absolute',
