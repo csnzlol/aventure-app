@@ -1,7 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
 
-// Define the navigation stack
+// Define the navigation stack types
 export type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -9,10 +8,6 @@ export type RootStackParamList = {
   WorkoutDetail: { exerciseId: string };
 };
 
-// Navigation types for Home screen
+// Navigation prop types for each screen
 export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-export type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
-
-// Navigation types for WorkoutDetail
 export type WorkoutDetailNavigationProp = NativeStackNavigationProp<RootStackParamList, 'WorkoutDetail'>;
-export type WorkoutDetailRouteProp = RouteProp<RootStackParamList, 'WorkoutDetail'>;

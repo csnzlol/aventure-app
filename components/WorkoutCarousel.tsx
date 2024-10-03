@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { WorkoutDetailNavigationProp } from '../types/navigation'; // Import from central navigation file
+import { WorkoutDetailNavigationProp } from '../types/navigation'; // Make sure this path is correct
 
 // Define the type for workout items
 type WorkoutItem = {
@@ -11,8 +11,8 @@ type WorkoutItem = {
 };
 
 type WorkoutCarouselProps = {
-  data: WorkoutItem[];  // The workout items array
-  navigation: WorkoutDetailNavigationProp;  // Correct navigation type
+  data: WorkoutItem[]; // Workout data array
+  navigation: WorkoutDetailNavigationProp; // Navigation type for WorkoutDetail
 };
 
 const WorkoutCarousel: React.FC<WorkoutCarouselProps> = ({ data, navigation }) => {
