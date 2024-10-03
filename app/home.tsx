@@ -1,7 +1,7 @@
-import React from 'react';
-import { ImageBackground, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // For icons
-import StepCounter from '../components/StepCounter'; // Import the step counter component
+import React, { useState, useRef } from 'react';
+import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import Carousel from 'react-native-snap-carousel'; // For the carousel
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 
@@ -10,6 +10,13 @@ type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
   Settings: undefined;
+  WorkoutDetail: { exerciseId: string }; // Assuming there's a WorkoutDetail screen
+};
+
+type WorkoutItem = {
+  id: string;
+  title: string;
+  image: any;
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -20,7 +27,26 @@ type Props = {
   route: HomeScreenRouteProp;
 };
 
+// Get device width for carousel item width calculation
+const { width: viewportWidth } = Dimensions.get('window');
+
 export default function Home({ navigation }: Props) {
+  const [workouts] = useState<WorkoutItem[]>([
+    { id: '1', title: 'Push Ups', image: require('../assets/workouts/pushups.jpg') },
+    { id: '2', title: 'Pull Ups', image: require('../assets/workouts/pullups.jpg') },
+    { id: '3', title: 'Squats', image: require('../assets/workouts/squats.jpg') },
+  ]);
+
+  const carouselRef = useRef(null);
+
+  // Render each workout in the carousel
+  const renderWorkoutItem = ({ item }: { item: WorkoutItem }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetail', { exerciseId: item.id })}>
+      <Image source={item.image} style={styles.carouselImage} />
+      <Text style={styles.carouselTitle}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <ImageBackground
       source={require('../assets/images/osiris_achtergrond.jpg')}
@@ -33,28 +59,29 @@ export default function Home({ navigation }: Props) {
 
         {/* Status Boxes */}
         <View style={styles.statusContainer}>
-          <View style={styles.row}>
-            {/* Afgewerkt */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Afgewerkt</Text>
-              <Text style={styles.statusValue}>💪</Text>
-            </View>
-
-            {/* In Uitvoering */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Stappen 🥾</Text>
-              <StepCounter />
-            </View>
+          {/* Afgewerkt */}
+          <View style={styles.statusBox}>
+            <Text style={styles.statusTitle}>Afgewerkt</Text>
           </View>
 
-          <View style={styles.row}>
-            {/* Bestede Tijd */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Bestede Tijd</Text>
-              <Text style={styles.statusValue}>⏱</Text>
-            </View>
+          {/* In Uitvoering */}
+          <View style={styles.statusBox}>
+            <Text style={styles.statusTitle}>In Uitvoering</Text>
           </View>
         </View>
+
+        {/* Workout Carousel */}
+        <Text style={styles.workoutHeader}>Ontdek nieuwe workouts</Text>
+        <Carousel
+          ref={carouselRef}
+          data={workouts}
+          renderItem={renderWorkoutItem} // Add this line to ensure renderItem is passed
+          sliderWidth={viewportWidth}
+          itemWidth={viewportWidth * 0.7} // Each item takes 70% of the viewport width
+          loop={true} // Loop through the items
+          autoplay={true} // Automatically scroll
+          autoplayInterval={3000} // 3 seconds interval
+        />
 
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
@@ -107,16 +134,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   statusContainer: {
-    width: '100%',
-    marginTop: 20,
-  },
-  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    width: '100%',
   },
   statusBox: {
-    width: '47%',
+    width: '30%',
     height: 100,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
@@ -129,13 +152,30 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
   },
-  statusTitle: {
+  statusTitle: { // Add the statusTitle here
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    color: '#000', // Customize this color as you like
+    textAlign: 'center',
   },
-  statusValue: {
-    fontSize: 28,
+  workoutHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+    color: '#fff',
+  },
+  carouselImage: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+  },
+  carouselTitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   bottomNav: {
     position: 'absolute',
