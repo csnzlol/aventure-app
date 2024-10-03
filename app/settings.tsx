@@ -23,7 +23,6 @@ export default function Settings({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image source={require('./your_profile_image.jpg')} style={styles.profileImage} />
         <Text style={styles.profileName}>Sam Langkamp</Text>
         <Button title="Log out" onPress={() => { /* Handle log out logic */ }} />
       </View>
