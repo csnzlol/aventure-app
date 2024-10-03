@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './home';
+import Home from './home.tsx';
 import WorkoutsScreen from './workouts'; // Hernoemen van de import
 import Settings from './settings';
 

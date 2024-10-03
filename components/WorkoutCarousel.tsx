@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { WorkoutDetailNavigationProp } from '../types/navigation'; // Import from central navigation file
 
 // Define the type for workout items
 type WorkoutItem = {
@@ -10,18 +10,12 @@ type WorkoutItem = {
   image: any;
 };
 
-// Define the type for the navigation prop
-type RootStackParamList = {
-  WorkoutDetail: { exerciseId: string };
-};
-
 type WorkoutCarouselProps = {
-  data: WorkoutItem[]; // An array of WorkoutItem
-  navigation: NativeStackNavigationProp<RootStackParamList, 'WorkoutDetail'>;
+  data: WorkoutItem[];  // The workout items array
+  navigation: WorkoutDetailNavigationProp;  // Correct navigation type
 };
 
 const WorkoutCarousel: React.FC<WorkoutCarouselProps> = ({ data, navigation }) => {
-  // Render each workout item
   const renderWorkoutItem = ({ item }: { item: WorkoutItem }) => (
     <TouchableOpacity onPress={() => navigation.navigate('WorkoutDetail', { exerciseId: item.id })}>
       <Image source={item.image} style={styles.carouselImage} />
@@ -31,10 +25,10 @@ const WorkoutCarousel: React.FC<WorkoutCarouselProps> = ({ data, navigation }) =
 
   return (
     <Carousel
-      data={data} // Data for the carousel
-      renderItem={renderWorkoutItem} // Render each item
-      sliderWidth={300} // Adjust this to your needs
-      itemWidth={250} // Adjust this to your needs
+      data={data}
+      renderItem={renderWorkoutItem}
+      sliderWidth={300}
+      itemWidth={250}
       loop
       autoplay
       autoplayInterval={3000}
