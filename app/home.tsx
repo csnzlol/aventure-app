@@ -59,7 +59,7 @@ export default function Home({ navigation }: Props) {
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-            <MaterialIcons name="home" size={24} color="gray" />
+            <MaterialIcons name="home" size={24} color="lightblue" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
