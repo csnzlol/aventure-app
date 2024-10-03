@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import WorkoutCarousel from '../components/WorkoutCarousel';
-import { HomeScreenNavigationProp } from '../types/navigation'; // Import from central navigation file
+import { HomeScreenNavigationProp, WorkoutDetailNavigationProp } from '../types/navigation'; // Import from central navigation file
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: HomeScreenNavigationProp & WorkoutDetailNavigationProp;
 };
 
 export default function Home({ navigation }: Props) {

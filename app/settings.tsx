@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
@@ -22,15 +22,19 @@ type Props = {
 export default function Settings({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Text>Settings Screen</Text>
-      <Button
-        title="Go to Home"
-        onPress={() => navigation.navigate('Home')}
-      />
-      <Button
-        title="Go to Workouts"
-        onPress={() => navigation.navigate('Workouts')}
-      />
+      <View style={styles.header}>
+        <Image source={require('./your_profile_image.jpg')} style={styles.profileImage} />
+        <Text style={styles.profileName}>Sam Langkamp</Text>
+        <Button title="Log out" onPress={() => { /* Handle log out logic */ }} />
+      </View>
+
+      <View style={styles.grid}>
+        {/* Add your grid cells here */}
+        <TouchableOpacity style={styles.gridCell}>
+          <Text>Setting 1</Text>
+        </TouchableOpacity>
+        {/* ... more grid cells */}
+      </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNav}>
@@ -54,8 +58,40 @@ export default function Settings({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  profileName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  grid: {
+    flex: 1,
+    padding: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  gridCell: {
+    width: '48%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomNav: {
     position: 'absolute',

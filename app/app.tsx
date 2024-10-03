@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './home.tsx';
+import Home from './home';
 import WorkoutsScreen from './workouts'; // Hernoemen van de import
 import Settings from './settings';
 
@@ -24,7 +24,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Workouts" component={WorkoutsScreen} /> {/* Gebruik de hernoemde import */}
+        <Stack.Screen name="Workouts" component={WorkoutsScreen} />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
