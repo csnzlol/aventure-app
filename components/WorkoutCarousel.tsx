@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { WorkoutDetailNavigationProp } from '../types/navigation'; // Make sure this path is correct
+import { WorkoutDetailNavigationProp } from '../types/navigation'; // Ensure this is correct
 
 // Define the type for workout items
 type WorkoutItem = {
@@ -11,8 +11,8 @@ type WorkoutItem = {
 };
 
 type WorkoutCarouselProps = {
-  data: WorkoutItem[]; // Workout data array
-  navigation: WorkoutDetailNavigationProp; // Navigation type for WorkoutDetail
+  data: WorkoutItem[];
+  navigation: WorkoutDetailNavigationProp;
 };
 
 const WorkoutCarousel: React.FC<WorkoutCarouselProps> = ({ data, navigation }) => {
@@ -31,12 +31,14 @@ const WorkoutCarousel: React.FC<WorkoutCarouselProps> = ({ data, navigation }) =
       itemWidth={250}
       loop
       autoplay
-      autoplayInterval={3000}
-    />
+      autoplayInterval={3000}    />
   );
 };
 
 const styles = StyleSheet.create({
+  carouselContainer: {
+    // Add styles if needed, or remove this if not required
+  },
   carouselImage: {
     width: '100%',
     height: 150,
