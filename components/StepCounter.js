@@ -24,7 +24,7 @@ export default function StepCounter() {
   return (
     <>
       {isPedometerAvailable ? (
-        <Text>Steps Today: {stepCount}</Text>
+        <Text>Vandaag: {stepCount}</Text>
       ) : (
         <Text>Pedometer not available</Text>
       )}

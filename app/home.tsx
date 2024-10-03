@@ -42,7 +42,7 @@ export default function Home({ navigation }: Props) {
 
             {/* In Uitvoering */}
             <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>In Uitvoering</Text>
+              <Text style={styles.statusTitle}>Stappen 🥾</Text>
               <StepCounter />
             </View>
           </View>
