@@ -1,56 +1,60 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Dimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Voor iconen
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
-
-// Definieer het type voor de navigatieprop
-type RootStackParamList = {
-  Home: undefined;
-  Workouts: undefined;
-  Settings: undefined;
-};
-
-type SettingsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Settings'>;
-type SettingsScreenRouteProp = RouteProp<RootStackParamList, 'Settings'>;
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { SettingsNavigationProp } from '../types/navigation'; // Zorg ervoor dat je het juiste pad gebruikt
 
 type Props = {
-  navigation: SettingsScreenNavigationProp;
-  route: SettingsScreenRouteProp;
+  navigation: SettingsNavigationProp;
 };
 
 export default function Settings({ navigation }: Props) {
+
+  // Uitlogfunctie
+  const handleLogout = () => {
+    console.log('User logged out');
+    navigation.replace('Login'); 
+  };
+
   return (
-    <ImageBackground
-      source={require('../assets/images/osiris_achtergrond.jpg')}
-      style={styles.background}
-    >
+    <ImageBackground source={require('../assets/images/osiris_achtergrond.jpg')} style={styles.background}>
       <View style={styles.container}>
-        {/* Header */}
-        <Text style={styles.header}>Instellingen</Text>
 
-        {/* Instelling opties */}
-        <View style={styles.settingsContainer}>
-          <TouchableOpacity style={styles.settingOption}>
-            <MaterialIcons name="account-circle" size={24} color="black" />
-            <Text style={styles.optionText}>Account</Text>
-          </TouchableOpacity>
+        {/* Profielfoto en naam */}
+        <View style={styles.profileSection}>
+          <Image
+            // Voeg je profielfoto toe
+            style={styles.profileImage}
+          />
+          <Text style={styles.profileName}>Sam Langkamp</Text>
 
-          <TouchableOpacity style={styles.settingOption}>
-            <MaterialIcons name="security" size={24} color="black" />
-            <Text style={styles.optionText}>Privacy</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingOption}>
-            <MaterialIcons name="notifications" size={24} color="black" />
-            <Text style={styles.optionText}>Notificaties</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingOption}>
-            <MaterialIcons name="logout" size={24} color="black" />
-            <Text style={styles.optionText}>Uitloggen</Text>
+          {/* Uitlog Button */}
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutText}>Log out</Text>
+            <MaterialIcons name="logout" size={20} color="white" style={styles.logoutIcon} />
           </TouchableOpacity>
         </View>
+
+        {/* Instellingen opties */}
+        <View style={styles.optionsContainer}>
+          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Account')}>
+            <MaterialIcons name="account-circle" size={24} color="black" />
+            <Text style={styles.optionText}>Account</Text>
+            <MaterialIcons name="chevron-right" size={24} color="gray" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Privacy')}>
+            <MaterialIcons name="security" size={24} color="black" />
+            <Text style={styles.optionText}>Privacy</Text>
+            <MaterialIcons name="chevron-right" size={24} color="gray" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Notifications')}>
+            <MaterialIcons name="notifications" size={24} color="black" />
+            <Text style={styles.optionText}>Notificaties</Text>
+            <MaterialIcons name="chevron-right" size={24} color="gray" />
+          </TouchableOpacity>
+        </View>
+
       </View>
     </ImageBackground>
   );
@@ -63,62 +67,59 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    alignItems: 'center',
     padding: 20,
+    paddingTop: 120, // Verhoogd om alles verder naar beneden te schuiven
   },
-  header: {
-    fontSize: 24,
-    color: '#FFFFFF',
-    marginTop: 50,
-    marginBottom: 20,
+  profileSection: {
+    alignItems: 'center',
+    marginVertical: 30,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  profileName: {
+    fontSize: 22,
     fontWeight: 'bold',
-    textShadowColor: '#555555',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
+    marginBottom: 10,
+    color: 'white', // Voeg kleur toe
   },
-  settingsContainer: {
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  logoutText: {
+    fontSize: 16,
+    color: 'black',
+    fontWeight: 'bold',
+     // Verander de tekstkleur naar wit
+  },
+  logoutIcon: {
+    marginLeft: 5,
+    color: 'black'
+  },
+  optionsContainer: {
+    width: '100%',
     marginTop: 20,
   },
-  settingOption: {
+  option: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     borderRadius: 10,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 5,
-    elevation: 5,
+    marginBottom: 10,
   },
   optionText: {
+    marginLeft: 10,
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  bottomNav: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#FFFFFF',
-    paddingVertical: 15,
-    borderRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    elevation: 10,
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    color: 'gray',
-    fontSize: 14,
-    marginTop: 4,
   },
 });
