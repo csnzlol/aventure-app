@@ -39,6 +39,14 @@ export default function Index() {
       >
         <Text style={styles.loginButtonText}>Home</Text>
       </TouchableOpacity>
+
+      {/* Button to navigate to the settings page */}
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/settings')}
+      >
+        <Text style={styles.loginButtonText}>Settings</Text>
+      </TouchableOpacity>
     </View>
   );
 }

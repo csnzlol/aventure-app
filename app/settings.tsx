@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Dimensions } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; // Voor iconen
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 
-// Define the type for the navigation prop
+// Definieer het type voor de navigatieprop
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -21,76 +21,81 @@ type Props = {
 
 export default function Settings({ navigation }: Props) {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.profileName}>Sam Langkamp</Text>
-        <Button title="Log out" onPress={() => { /* Handle log out logic */ }} />
-      </View>
+    <ImageBackground
+      source={require('../assets/images/osiris_achtergrond.jpg')}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        {/* Header */}
+        <Text style={styles.header}>Instellingen</Text>
 
-      <View style={styles.grid}>
-        {/* Add your grid cells here */}
-        <TouchableOpacity style={styles.gridCell}>
-          <Text>Setting 1</Text>
-        </TouchableOpacity>
-        {/* ... more grid cells */}
-      </View>
+        {/* Instelling opties */}
+        <View style={styles.settingsContainer}>
+          <TouchableOpacity style={styles.settingOption}>
+            <MaterialIcons name="account-circle" size={24} color="black" />
+            <Text style={styles.optionText}>Account</Text>
+          </TouchableOpacity>
 
-      {/* Bottom Navigation Bar */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-          <MaterialIcons name="home" size={24} color="gray" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
-          <MaterialIcons name="fitness-center" size={24} color="gray" />
-          <Text style={styles.navText}>Workouts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
-          <MaterialIcons name="settings" size={24} color="gray" />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.settingOption}>
+            <MaterialIcons name="security" size={24} color="black" />
+            <Text style={styles.optionText}>Privacy</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.settingOption}>
+            <MaterialIcons name="notifications" size={24} color="black" />
+            <Text style={styles.optionText}>Notificaties</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.settingOption}>
+            <MaterialIcons name="logout" size={24} color="black" />
+            <Text style={styles.optionText}>Uitloggen</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     padding: 20,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  profileName: {
-    fontSize: 18,
+    fontSize: 24,
+    color: '#FFFFFF',
+    marginTop: 50,
+    marginBottom: 20,
     fontWeight: 'bold',
+    textShadowColor: '#555555',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
   },
-  grid: {
-    flex: 1,
-    padding: 20,
+  settingsContainer: {
+    marginTop: 20,
+  },
+  settingOption: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  gridCell: {
-    width: '48%',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
     alignItems: 'center',
-    justifyContent: 'center',
+    padding: 15,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  optionText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
   bottomNav: {
     position: 'absolute',

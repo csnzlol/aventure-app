@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // For icons
-import StepCounter from '../components/StepCounter'; // Import the step counter component
+import { MaterialIcons } from '@expo/vector-icons'; 
+import StepCounter from '../components/StepCounter'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';  // Import AsyncStorage
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 
@@ -10,7 +11,7 @@ type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
   Settings: undefined;
-  WorkoutDetail: { exerciseId: string }; // Add this for workout detail navigation
+  WorkoutDetail: { exerciseId: string }; 
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -22,6 +23,39 @@ type Props = {
 };
 
 export default function Home({ navigation }: Props) {
+  const [userName, setUserName] = useState('');
+  const [greeting, setGreeting] = useState('');
+
+  // Function to determine the greeting based on time
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Goedemorgen';
+    if (hour < 18) return 'Goedemiddag';
+    return 'Goedeavond';
+  };
+
+  useEffect(() => {
+    // Get the logged-in user's email from AsyncStorage or from props
+    const fetchUserName = async () => {
+      try {
+        const email = await AsyncStorage.getItem('user_email'); // Assuming you store email in AsyncStorage during login
+        if (email) {
+          // Fetch the user's name from the backend using the email
+          const response = await fetch(`https://your-backend-url.com/user/${email}`);
+          const data = await response.json();
+          if (response.ok) {
+            setUserName(data.name);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+
+    fetchUserName();
+    setGreeting(getGreeting());
+  }, []);
+
   const workoutImages = [
     { id: '1', title: 'Push Ups', image: require('../assets/workouts/pushups.jpg') },
     { id: '2', title: 'Squats', image: require('../assets/workouts/squats.jpg') },
@@ -35,7 +69,7 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.header}>Goedemorgen, Sam</Text>
+        <Text style={styles.header}>{greeting}, {userName}</Text>
         <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
 
         {/* Status Boxes */}
@@ -171,7 +205,7 @@ const styles = StyleSheet.create({
   },
   workoutImage: {
     width: Dimensions.get('window').width * 0.85, // Use 85% of the screen width for each image
-    height: 200, // Adjust height as necessary
+    height: 200, 
     borderRadius: 5,
   },
   workoutTitle: {
