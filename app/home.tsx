@@ -5,7 +5,9 @@ import StepCounter from '../components/StepCounter';
 import AsyncStorage from '@react-native-async-storage/async-storage';  // Import AsyncStorage
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
+import {useRouter} from 'expo-router'
 
+const router = useRouter(); 
 // Define the type for the navigation prop
 type RootStackParamList = {
   Home: undefined;
@@ -114,15 +116,15 @@ export default function Home({ navigation }: Props) {
 
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-            <MaterialIcons name="home" size={24} color="gray" />
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
+            <MaterialIcons name="home" size={24} color="lightblue" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./workouts')}>
             <MaterialIcons name="fitness-center" size={24} color="gray" />
             <Text style={styles.navText}>Workouts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./settings')}>
             <MaterialIcons name="settings" size={24} color="gray" />
             <Text style={styles.navText}>Settings</Text>
           </TouchableOpacity>

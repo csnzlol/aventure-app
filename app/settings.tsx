@@ -1,61 +1,59 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ImageBackground, StyleSheet, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { SettingsNavigationProp } from '../types/navigation'; // Zorg ervoor dat je het juiste pad gebruikt
+import { useRouter } from 'expo-router';
 
-type Props = {
-  navigation: SettingsNavigationProp;
-};
-
-export default function Settings({ navigation }: Props) {
+export default function Settings() {
+  const router = useRouter();
 
   // Uitlogfunctie
   const handleLogout = () => {
     console.log('User logged out');
-    navigation.replace('Login'); 
+    router.push('/login');
   };
 
   return (
     <ImageBackground source={require('../assets/images/osiris_achtergrond.jpg')} style={styles.background}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {/* Profielfoto */}
+            <Image
+              source={require('../assets/images/KevinVierhuis.jpg')} // Lokale profielfoto
+              style={styles.profileImage}
+            />
+            
+            <Text style={styles.profileName}>Kevin Vierhuis</Text>
+            
+            {/* Uitlog Button */}
+            <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+              <MaterialIcons name="logout" size={24} color="white" style={styles.logoutIcon} />
+              <Text style={styles.logoutText}>Uitloggen</Text>
+            </TouchableOpacity>
+          </View>
 
-        {/* Profielfoto en naam */}
-        <View style={styles.profileSection}>
-          <Image
-            // Voeg je profielfoto toe
-            style={styles.profileImage}
-          />
-          <Text style={styles.profileName}>Sam Langkamp</Text>
+          {/* Instellingen opties */}
+          <View style={styles.optionsContainer}>
+            <TouchableOpacity style={styles.option} onPress={() => router.push('./account')}>
+              <MaterialIcons name="account-circle" size={24} color="black" />
+              <Text style={styles.optionText}>Account</Text>
+              <MaterialIcons name="chevron-right" size={24} color="gray" />
+            </TouchableOpacity>
 
-          {/* Uitlog Button */}
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutText}>Log out</Text>
-            <MaterialIcons name="logout" size={20} color="white" style={styles.logoutIcon} />
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.option} onPress={() => router.push('./privacy')}>
+              <MaterialIcons name="security" size={24} color="black" />
+              <Text style={styles.optionText}>Privacy</Text>
+              <MaterialIcons name="chevron-right" size={24} color="gray" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.option} onPress={() => router.push('./notifications')}>
+              <MaterialIcons name="notifications" size={24} color="black" />
+              <Text style={styles.optionText}>Notificaties</Text>
+              <MaterialIcons name="chevron-right" size={24} color="gray" />
+            </TouchableOpacity>
+          </View>
         </View>
-
-        {/* Instellingen opties */}
-        <View style={styles.optionsContainer}>
-          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Account')}>
-            <MaterialIcons name="account-circle" size={24} color="black" />
-            <Text style={styles.optionText}>Account</Text>
-            <MaterialIcons name="chevron-right" size={24} color="gray" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Privacy')}>
-            <MaterialIcons name="security" size={24} color="black" />
-            <Text style={styles.optionText}>Privacy</Text>
-            <MaterialIcons name="chevron-right" size={24} color="gray" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Notifications')}>
-            <MaterialIcons name="notifications" size={24} color="black" />
-            <Text style={styles.optionText}>Notificaties</Text>
-            <MaterialIcons name="chevron-right" size={24} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
@@ -65,29 +63,30 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 120, // Verhoogd om alles verder naar beneden te schuiven
   },
-  profileSection: {
+  header: {
     alignItems: 'center',
-    marginVertical: 30,
+    marginBottom: 40,
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
     marginBottom: 10,
-    borderWidth: 2,
-    borderColor: 'white',
   },
   profileName: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'white', // Voeg kleur toe
+    color: 'white',
   },
   logoutButton: {
     flexDirection: 'row',
@@ -96,17 +95,17 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
-     // Verander de tekstkleur naar wit
   },
   logoutIcon: {
-    marginLeft: 5,
-    color: 'black'
+    marginRight: 5,
+    color: 'white',
   },
   optionsContainer: {
     width: '100%',
     marginTop: 20,
+    justifyContent: 'center',
   },
   option: {
     flexDirection: 'row',
@@ -116,10 +115,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 10,
     marginBottom: 10,
+    width: '100%',
   },
   optionText: {
     marginLeft: 10,
     fontSize: 16,
-    fontWeight: 'bold',
   },
 });

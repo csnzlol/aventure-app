@@ -1,62 +1,116 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
+// Import local images
+const workout1Image = require('../assets/workouts/pushups.jpg');
+const workout2Image = require('../assets/workouts/squats.jpg');
+const workout3Image = require('../assets/workouts/pullups.jpg');
+const workout4Image = require('../assets/workouts/planks.jpg');
 
-// Define the type for the navigation prop
-type RootStackParamList = {
-  Home: undefined;
-  Workouts: undefined;
-  Settings: undefined;
-};
+export default function Workouts() {
+  const router = useRouter();
 
-type WorkoutsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Workouts'>;
-type WorkoutsScreenRouteProp = RouteProp<RootStackParamList, 'Workouts'>;
-
-type Props = {
-  navigation: WorkoutsScreenNavigationProp;
-  route: WorkoutsScreenRouteProp;
-};
-
-export default function Settings({ navigation }: Props) {
   return (
-    <View style={styles.container}>
-      <Text>Settings Screen</Text>
-      <Button
-        title="Go to Home"
-        onPress={() => navigation.navigate('Home')}
-      />
-      <Button
-        title="Go to Workouts"
-        onPress={() => navigation.navigate('Workouts')}
-      />
+    <ImageBackground source={require('../assets/images/osiris_achtergrond.jpg')} style={styles.background}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Ontdek nieuwe Workouts</Text>
+        
+        {/* Workout Blokken */}
+        <View style={styles.workoutContainer}>
+          <TouchableOpacity style={styles.workoutCard}>
+            <Image
+              source={workout1Image} // Use local image
+              style={styles.workoutImage}
+            />
+            <Text style={styles.workoutText}>Push Ups</Text>
+          </TouchableOpacity>
 
-      {/* Bottom Navigation Bar */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-          <MaterialIcons name="home" size={24} color="gray" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
-          <MaterialIcons name="fitness-center" size={24} color="gray" />
-          <Text style={styles.navText}>Workouts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
-          <MaterialIcons name="settings" size={24} color="gray" />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.workoutCard}>
+            <Image
+              source={workout2Image} // Use local image
+              style={styles.workoutImage}
+            />
+            <Text style={styles.workoutText}>Squats</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.workoutCard}>
+            <Image
+              source={workout3Image} // Use local image
+              style={styles.workoutImage}
+            />
+            <Text style={styles.workoutText}>Lunges</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.workoutCard}>
+            <Image
+              source={workout4Image} // Use local image
+              style={styles.workoutImage}
+            />
+            <Text style={styles.workoutText}>Planks</Text>
+          </TouchableOpacity>
+        </View>
+    
+        {/* Bottom Navigation Bar */}
+        <View style={styles.bottomNav}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('/home')}>
+            <MaterialIcons name="home" size={24} color="gray" />
+            <Text style={styles.navText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('/workouts')}>
+            <MaterialIcons name="fitness-center" size={24} color="lightblue" />
+            <Text style={styles.navText}>Workouts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('/settings')}>
+            <MaterialIcons name="settings" size={24} color="gray" />
+            <Text style={styles.navText}>Settings</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 20,
+  },
+  workoutContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  workoutCard: {
+    width: '45%',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  workoutImage: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+  },
+  workoutText: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   bottomNav: {
     position: 'absolute',

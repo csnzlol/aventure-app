@@ -5,7 +5,10 @@ export type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
   Settings: undefined;
-  WorkoutDetail: { workoutId: string };
+  Account: undefined;
+  Privacy: undefined;
+  Notifications: undefined;
+  Login: undefined;
 };
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
