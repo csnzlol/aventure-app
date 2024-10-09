@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { ImageBackground, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import StepCounter from '../components/StepCounter'; 
-import AsyncStorage from '@react-native-async-storage/async-storage';  // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import {useRouter} from 'expo-router'
 
 const router = useRouter(); 
-// Define the type for the navigation prop
+
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -28,7 +28,7 @@ export default function Home({ navigation }: Props) {
   const [userName, setUserName] = useState('');
   const [greeting, setGreeting] = useState('');
 
-  // Function to determine the greeting based on time
+  
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Goedemorgen';
@@ -71,19 +71,18 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.header}>{greeting}, {userName}</Text>
+        <Text style={styles.header}>{greeting} {userName}</Text>
         <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
 
         {/* Status Boxes */}
         <View style={styles.statusContainer}>
           <View style={styles.row}>
-            {/* Afgewerkt */}
             <View style={styles.statusBox}>
               <Text style={styles.statusTitle}>Afgewerkt</Text>
               <Text style={styles.statusValue}>💪</Text>
             </View>
 
-            {/* In Uitvoering */}
+            {/* Stappen */}
             <View style={styles.statusBox}>
               <Text style={styles.statusTitle}>Stappen 🥾</Text>
               <StepCounter />
@@ -99,7 +98,7 @@ export default function Home({ navigation }: Props) {
           </View>
         </View>
 
-        {/* New Workouts Section */}
+        {/* Nieuwe Workouts Section */}
         <Text style={styles.workoutHeader}>Ontdek nieuwe workouts</Text>
         <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
           {workoutImages.map((workout) => (
@@ -114,7 +113,7 @@ export default function Home({ navigation }: Props) {
           ))}
         </ScrollView>
 
-        {/* Bottom Navigation Bar */}
+        {/* Bottom Navigatie Bar */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
             <MaterialIcons name="home" size={24} color="lightblue" />
