@@ -7,8 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 
-const router = useRouter();
-
+// Define the type for the navigation prop
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -36,10 +35,12 @@ export default function Home({ navigation }: Props) {
   };
 
   useEffect(() => {
+    // Get the logged-in user's email from AsyncStorage
     const fetchUserName = async () => {
       try {
-        const email = await AsyncStorage.getItem('user_email');
+        const email = await AsyncStorage.getItem('user_email'); // Assuming email is stored in AsyncStorage
         if (email) {
+          // Fetch the user's name from the backend using the email
           const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
@@ -68,16 +69,8 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <View style={styles.headerContainer}>
-          <View>
-            <Text style={styles.header}>{greeting}, {userName}</Text>
-            <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
-          </View>
-          <Image
-            source={require('../assets/images/KevinVierhuis.jpg')}
-            style={styles.profileImage}
-          />
-        </View>
+        <Text style={styles.header}>{greeting}, {userName}</Text>
+        <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
 
         {/* Status Boxes */}
         <View style={styles.statusContainer}>
@@ -120,15 +113,15 @@ export default function Home({ navigation }: Props) {
 
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
             <MaterialIcons name="home" size={24} color="lightblue" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./workouts')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
             <MaterialIcons name="fitness-center" size={24} color="gray" />
             <Text style={styles.navText}>Workouts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./Settings')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
             <MaterialIcons name="settings" size={24} color="gray" />
             <Text style={styles.navText}>Settings</Text>
           </TouchableOpacity>
@@ -145,17 +138,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     padding: 20,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 50,
   },
   header: {
     fontSize: 24,
     color: '#FFFFFF',
+    marginTop: 50,
+    marginBottom: 10,
     fontWeight: 'bold',
     textShadowColor: '#555555',
     textShadowOffset: { width: 2, height: 2 },
@@ -164,16 +155,11 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 16,
     color: '#E4E4E4',
+    marginBottom: 20,
     fontWeight: 'bold',
     textShadowColor: '#555555',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#FFFFFF',
   },
   statusContainer: {
     width: '100%',
@@ -186,7 +172,7 @@ const styles = StyleSheet.create({
   },
   statusBox: {
     width: '47%',
-    height: 120,
+    height: 100,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     justifyContent: 'center',
@@ -217,7 +203,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   workoutImage: {
-    width: Dimensions.get('window').width * 0.85, 
+    width: Dimensions.get('window').width * 0.85,
     height: 200,
     borderRadius: 5,
   },
