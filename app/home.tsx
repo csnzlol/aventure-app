@@ -7,7 +7,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 
-// Define the type for the navigation prop
+const router = useRouter();
+
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -38,9 +39,9 @@ export default function Home({ navigation }: Props) {
     // Get the logged-in user's email from AsyncStorage
     const fetchUserName = async () => {
       try {
-        const email = await AsyncStorage.getItem('user_email'); // Assuming email is stored in AsyncStorage
+        const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          // Fetch the user's name from the backend using the email
+          
           const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
@@ -113,15 +114,15 @@ export default function Home({ navigation }: Props) {
 
         {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
             <MaterialIcons name="home" size={24} color="lightblue" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./workouts')}>
             <MaterialIcons name="fitness-center" size={24} color="gray" />
             <Text style={styles.navText}>Workouts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./settings')}>
             <MaterialIcons name="settings" size={24} color="gray" />
             <Text style={styles.navText}>Settings</Text>
           </TouchableOpacity>
