@@ -9,7 +9,12 @@ export type RootStackParamList = {
   Privacy: undefined;
   Notifications: undefined;
   Login: undefined;
+  WorkoutDetail: { exerciseId: string }; // Define this screen
 };
+
+// Define WorkoutDetailNavigationProp
+export type WorkoutDetailNavigationProp = NativeStackNavigationProp<RootStackParamList, 'WorkoutDetail'>;
+
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type WorkoutsNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Workouts'>;
