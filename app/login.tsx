@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Use router to navigate programmatically
+  const router = useRouter(); 
 
   const handleLogin = () => {
-    fetch('http://13.38.123.253/api/login.php', {
+    fetch('http://51.44.11.254/api/login.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,10 +20,15 @@ export default function LoginScreen() {
       }),
     })
       .then(response => response.json())
-      .then(data => {
+      .then(async data => {
         if (data.message === 'Login successful') {
           console.log('Login successful');
-          router.push('/home'); // Redirect to main page after login
+
+          // Store the email in AsyncStorage
+          await AsyncStorage.setItem('user_email', email);
+
+          // Redirect to main page after login
+          router.push('/home');
         } else {
           console.log(data.message); // Show error message
         }
@@ -34,14 +40,13 @@ export default function LoginScreen() {
 
   return (
     <ImageBackground
-      source={require('../assets/images/login_aventure.jpg')} // Background image (ensure it is in the assets folder)
+      source={require('../assets/images/login_aventure.jpg')} 
       style={styles.background}
     >
       <View style={styles.container}>
         <View style={styles.loginBox}>
           <Text style={styles.loginTitle}>Login Account</Text>
 
-          {/* E-mail field */}
           <TextInput
             style={styles.input}
             placeholder="E-Mail"
@@ -52,7 +57,6 @@ export default function LoginScreen() {
             placeholderTextColor="#A9A9A9"
           />
 
-          {/* Password field */}
           <TextInput
             style={styles.input}
             placeholder="Wachtwoord"
@@ -62,21 +66,18 @@ export default function LoginScreen() {
             placeholderTextColor="#A9A9A9"
           />
 
-          {/* Login Button */}
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={handleLogin} // Trigger API call for login
+            onPress={handleLogin} 
           >
             <Text style={styles.loginButtonText}>LOG IN</Text>
           </TouchableOpacity>
 
-          {/* Forgot password link */}
           <TouchableOpacity onPress={() => console.log('Forgot password clicked')}>
             <Text style={styles.forgotPasswordText}>Wachtwoord vergeten?</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Register link */}
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Nog geen account?</Text>
           <TouchableOpacity onPress={() => router.push('/register')}>

@@ -5,10 +5,9 @@ import StepCounter from '../components/StepCounter';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import {useRouter} from 'expo-router'
+import { useRouter } from 'expo-router';
 
-const router = useRouter(); 
-
+// Define the type for the navigation prop
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -28,7 +27,6 @@ export default function Home({ navigation }: Props) {
   const [userName, setUserName] = useState('');
   const [greeting, setGreeting] = useState('');
 
-  
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Goedemorgen';
@@ -43,7 +41,7 @@ export default function Home({ navigation }: Props) {
         const email = await AsyncStorage.getItem('user_email'); // Assuming you store email in AsyncStorage during login
         if (email) {
           // Fetch the user's name from the backend using the email
-          const response = await fetch(`https://your-backend-url.com/user/${email}`);
+          const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);
@@ -71,7 +69,7 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.header}>{greeting} {userName}</Text>
+        <Text style={styles.header}>{greeting}, {userName}</Text>
         <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
 
         {/* Status Boxes */}
@@ -113,17 +111,17 @@ export default function Home({ navigation }: Props) {
           ))}
         </ScrollView>
 
-        {/* Bottom Navigatie Bar */}
+        {/* Bottom Navigation Bar */}
         <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
             <MaterialIcons name="home" size={24} color="lightblue" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./workouts')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Workouts')}>
             <MaterialIcons name="fitness-center" size={24} color="gray" />
             <Text style={styles.navText}>Workouts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => router.push('./settings')}>
+          <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
             <MaterialIcons name="settings" size={24} color="gray" />
             <Text style={styles.navText}>Settings</Text>
           </TouchableOpacity>
@@ -205,8 +203,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   workoutImage: {
-    width: Dimensions.get('window').width * 0.85, // Use 85% of the screen width for each image
-    height: 200, 
+    width: Dimensions.get('window').width * 0.85, 
+    height: 200,
     borderRadius: 5,
   },
   workoutTitle: {
