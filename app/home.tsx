@@ -8,7 +8,7 @@ import { RouteProp } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 
 const router = useRouter();
-// Define the type for the navigation prop
+
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -36,12 +36,10 @@ export default function Home({ navigation }: Props) {
   };
 
   useEffect(() => {
-    // Get the logged-in user's email from AsyncStorage or from props
     const fetchUserName = async () => {
       try {
-        const email = await AsyncStorage.getItem('user_email'); // Assuming you store email in AsyncStorage during login
+        const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          // Fetch the user's name from the backend using the email
           const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
@@ -70,8 +68,16 @@ export default function Home({ navigation }: Props) {
     >
       <View style={styles.container}>
         {/* Header */}
-        <Text style={styles.header}>{greeting}, {userName}</Text>
-        <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
+        <View style={styles.headerContainer}>
+          <View>
+            <Text style={styles.header}>{greeting}, {userName}</Text>
+            <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
+          </View>
+          <Image
+            source={require('../assets/images/KevinVierhuis.jpg')}
+            style={styles.profileImage}
+          />
+        </View>
 
         {/* Status Boxes */}
         <View style={styles.statusContainer}>
@@ -139,15 +145,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     padding: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 50,
   },
   header: {
     fontSize: 24,
     color: '#FFFFFF',
-    marginTop: 50,
-    marginBottom: 10,
     fontWeight: 'bold',
     textShadowColor: '#555555',
     textShadowOffset: { width: 2, height: 2 },
@@ -156,11 +164,16 @@ const styles = StyleSheet.create({
   subHeader: {
     fontSize: 16,
     color: '#E4E4E4',
-    marginBottom: 20,
     fontWeight: 'bold',
     textShadowColor: '#555555',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#FFFFFF',
   },
   statusContainer: {
     width: '100%',
@@ -173,7 +186,7 @@ const styles = StyleSheet.create({
   },
   statusBox: {
     width: '47%',
-    height: 100,
+    height: 120,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     justifyContent: 'center',
