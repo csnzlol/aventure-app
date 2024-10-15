@@ -10,7 +10,6 @@ export default function Settings() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const router = useRouter();
 
-  // Fetch the saved profile image from AsyncStorage when the component mounts
   useEffect(() => {
     const loadProfileImage = async () => {
       try {
@@ -26,16 +25,13 @@ export default function Settings() {
     loadProfileImage();
   }, []);
 
-  // Function to handle image picking
   const pickImage = async () => {
-    // Request permission to access media library
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
       Alert.alert("Permission to access gallery is required!");
       return;
     }
 
-    // Let user pick an image
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -45,22 +41,18 @@ export default function Settings() {
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       const imageUri = result.assets[0].uri;
-
-      // Move the selected image to the app's FileSystem directory
       const newPath = `${FileSystem.cacheDirectory}${imageUri.split('/').pop()}`;
       await FileSystem.moveAsync({
         from: imageUri,
         to: newPath,
       });
 
-      // Save the new image path locally
       setProfileImage(newPath);
       await AsyncStorage.setItem('profileImage', newPath);
       console.log('Image saved locally:', newPath);
     }
   };
 
-  // Uitlogfunctie
   const handleLogout = () => {
     console.log('User logged out');
     router.push('/login');
@@ -71,24 +63,21 @@ export default function Settings() {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <View style={styles.header}>
-            {/* Profielfoto */}
             <TouchableOpacity onPress={pickImage}>
               <Image
-                source={profileImage ? { uri: profileImage } : require('../assets/images/KevinVierhuis.jpg')} // Show the picked image if available
+                source={profileImage ? { uri: profileImage } : require('../assets/images/KevinVierhuis.jpg')}
                 style={styles.profileImage}
               />
-              <Text style={styles.changePhotoText}>Change Photo</Text> {/* Text to show user they can press */}
+              <Text style={styles.changePhotoText}>Change Photo</Text>
             </TouchableOpacity>
             <Text style={styles.profileName}>Kevin Vierhuis</Text>
 
-            {/* Uitlog Button */}
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
               <MaterialIcons name="logout" size={24} color="white" style={styles.logoutIcon} />
               <Text style={styles.logoutText}>Uitloggen</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Instellingen opties */}
           <View style={styles.optionsContainer}>
             <TouchableOpacity style={styles.option} onPress={() => router.push('./account')}>
               <View style={styles.optionContent}>
@@ -147,7 +136,7 @@ const styles = StyleSheet.create({
   changePhotoText: {
     fontSize: 14,
     color: 'white',
-    textDecorationLine: 'underline', // To make it clear the photo can be changed
+    textDecorationLine: 'underline',
     marginTop: 5,
   },
   profileName: {
