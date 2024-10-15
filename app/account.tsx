@@ -8,14 +8,13 @@ export default function AccountSettings() {
   const [userName, setUserName] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(false);
-  const [isPrivateAccount, setIsPrivateAccount] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
+          const response = await fetch(`http://13.37.244.233/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);
@@ -36,7 +35,6 @@ export default function AccountSettings() {
   };
 
   const toggleNotifications = () => setIsNotificationsEnabled(previousState => !previousState);
-  const togglePrivateAccount = () => setIsPrivateAccount(previousState => !previousState);
 
   return (
     <ImageBackground 
@@ -62,17 +60,6 @@ export default function AccountSettings() {
         <View style={styles.settingsContainer}>
           <Text style={styles.sectionHeader}>Instellingen</Text>
 
-          {/* Account Settings */}
-          <View style={styles.settingItem}>
-            <Text style={styles.settingTitle}>Privacy Account</Text>
-            <Switch
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={isPrivateAccount ? '#f5dd4b' : '#f4f3f4'}
-              onValueChange={togglePrivateAccount}
-              value={isPrivateAccount}
-            />
-          </View>
-
           {/* Notification Settings */}
           <View style={styles.settingItem}>
             <Text style={styles.settingTitle}>Notificaties</Text>
@@ -91,10 +78,6 @@ export default function AccountSettings() {
 
           <TouchableOpacity style={styles.settingItem} onPress={() => router.push('/passwordrecovery')}>
             <Text style={styles.settingTitle}>Wijzig Wachtwoord</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem} onPress={() => router.push('/privacy')}>
-            <Text style={styles.settingTitle}>Privacybeleid</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -131,7 +114,6 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     color: '#808080',
-    textDecorationLine: 'underline',
   },
   settingsContainer: {
     marginTop: 30,
