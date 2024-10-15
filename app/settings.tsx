@@ -88,7 +88,7 @@ export default function Settings() {
                 source={profileImage ? { uri: profileImage } : require('../assets/images/KevinVierhuis.jpg')}
                 style={styles.profileImage}
               />
-              <Text style={styles.changePhotoText}>Change Photo</Text>
+              <Text style={styles.changePhotoText}>Foto Aanpassen</Text>
             </TouchableOpacity>
 
             {/* Ensure userName is always a string */}
@@ -158,13 +158,13 @@ const styles = StyleSheet.create({
   changePhotoText: {
     fontSize: 14,
     color: 'white',
-    textDecorationLine: 'underline',
-    marginTop: 5,
+    marginTop: 10,
   },
   profileName: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 10,
     color: 'white',
   },
   logoutButton: {
