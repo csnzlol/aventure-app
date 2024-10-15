@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 
 export default function Settings() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string>('');
+  const [userName, setUserName] = useState<string>('Loading...'); // Ensure userName is initialized as a string
   const router = useRouter();
 
   useEffect(() => {
@@ -29,17 +29,20 @@ export default function Settings() {
         if (email) {
           const response = await fetch(`http://13.37.244.233/api/getUser.php?email=${email}`);
           const data = await response.json();
-          if (response.ok) {
-            setUserName(data.name); // Set the user's name from the API response
+          if (response.ok && data.name) {
+            setUserName(data.name); // Set user's name from API response
+          } else {
+            setUserName('Unknown User'); // Fallback if API does not return a name
           }
         }
       } catch (error) {
         console.error('Failed to fetch user data:', error);
+        setUserName('Error fetching name'); // Handle error
       }
     };
 
     loadProfileImage();
-    fetchUserName(); // Fetch user name when the component mounts
+    fetchUserName();
   }, []);
 
   const pickImage = async () => {
@@ -87,8 +90,10 @@ export default function Settings() {
               />
               <Text style={styles.changePhotoText}>Change Photo</Text>
             </TouchableOpacity>
-            <Text style={styles.profileName}>{userName || "Loading..."}</Text> {/* Display user name */}
-            
+
+            {/* Ensure userName is always a string */}
+            <Text style={styles.profileName}>{userName}</Text>
+
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
               <MaterialIcons name="logout" size={24} color="white" style={styles.logoutIcon} />
               <Text style={styles.logoutText}>Uitloggen</Text>
