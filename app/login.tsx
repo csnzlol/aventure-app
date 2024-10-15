@@ -9,7 +9,7 @@ export default function LoginScreen() {
   const router = useRouter(); 
 
   const handleLogin = () => {
-    fetch('http://51.44.11.254/api/login.php', {
+    fetch('http://13.37.244.233/api/login.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

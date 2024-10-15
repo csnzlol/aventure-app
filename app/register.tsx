@@ -16,7 +16,7 @@ export default function RegisterScreen() {
     }
 
     // Make API request to PHP backend to register the user
-    fetch('http://51.44.11.254/api/register.php', {
+    fetch('http://13.37.244.233/api/register.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
