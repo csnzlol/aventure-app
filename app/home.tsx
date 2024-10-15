@@ -41,7 +41,7 @@ export default function Home({ navigation }: Props) {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
           
-          const response = await fetch(`http://51.44.11.254/api/getUser.php?email=${email}`);
+          const response = await fetch(`http://13.37.244.233/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);
