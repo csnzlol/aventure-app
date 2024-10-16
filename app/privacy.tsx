@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, SafeAreaView, ImageBackground } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage to get the logged-in user's email
 import { useRouter } from 'expo-router';
 
 export default function PrivacyScreen() {
+  const [userEmail, setUserEmail] = useState<string | null>(null); // State to store the user's email
   const router = useRouter();
+
+  // Fetch the logged-in user's email from AsyncStorage when the component mounts
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const email = await AsyncStorage.getItem('user_email');
+        if (email) {
+          setUserEmail(email); // Set the user's email in the state
+        }
+      } catch (error) {
+        console.error('Failed to retrieve user email:', error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
 
   const handleDeleteAccount = () => {
     Alert.alert(
@@ -17,28 +35,35 @@ export default function PrivacyScreen() {
     );
   };
 
-  const deleteAccount = () => {
-    // This is where you'd make an API call to delete the user's account
-    fetch('http://13.38.96.31/api/deleteAccount.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: 'user_email@example.com' }), // Replace with actual user email
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          Alert.alert('Account Verwijderd', 'Je account is succesvol verwijderd.');
-          router.push('/login'); // Redirect to login page after account deletion
-        } else {
-          Alert.alert('Fout', 'Er is iets misgegaan. Probeer het later opnieuw.');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        Alert.alert('Fout', 'Er is een probleem opgetreden.');
+  const deleteAccount = async () => {
+    if (!userEmail) {
+      Alert.alert('Fout', 'Geen e-mailadres gevonden voor de huidige gebruiker.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://13.38.96.31/api/deleteAccount.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail }), // Use the logged-in user's email
       });
+
+      const data = await response.json();
+      
+      console.log('API Response:', data); // Log the entire API response
+
+      if (data.success) {
+        Alert.alert('Account Verwijderd', 'Je account is succesvol verwijderd.');
+        router.push('/login'); // Redirect to login page after account deletion
+      } else {
+        Alert.alert('Fout', data.message || 'Er is iets misgegaan. Probeer het later opnieuw.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Fout', 'Er is een probleem opgetreden.');
+    }
   };
 
   return (
