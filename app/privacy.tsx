@@ -19,7 +19,7 @@ export default function PrivacyScreen() {
 
   const deleteAccount = () => {
     // This is where you'd make an API call to delete the user's account
-    fetch('http://13.37.244.233/api/deleteAccount.php', {
+    fetch('http://13.38.96.31/api/deleteAccount.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

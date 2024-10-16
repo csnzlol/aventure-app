@@ -27,7 +27,7 @@ export default function Settings() {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          const response = await fetch(`http://13.37.244.233/api/getUser.php?email=${email}`);
+          const response = await fetch(`http://13.38.96.31/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok && data.name) {
             setUserName(data.name); // Set user's name from API response
