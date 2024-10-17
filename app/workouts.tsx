@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
-// Import local images
+// Import lokale fotos
 const workout1Image = require('../assets/workouts/pushups.jpg');
 const workout2Image = require('../assets/workouts/squats.jpg');
 const workout3Image = require('../assets/workouts/pullups.jpg');
@@ -21,7 +21,7 @@ export default function Workouts() {
         <View style={styles.workoutContainer}>
           <TouchableOpacity style={styles.workoutCard}>
             <Image
-              source={workout1Image} // Use local image
+              source={workout1Image} // Gebruik lokale foto
               style={styles.workoutImage}
             />
             <Text style={styles.workoutText}>Push Ups</Text>
@@ -29,7 +29,7 @@ export default function Workouts() {
 
           <TouchableOpacity style={styles.workoutCard}>
             <Image
-              source={workout2Image} // Use local image
+              source={workout2Image} // Gebruik lokale foto
               style={styles.workoutImage}
             />
             <Text style={styles.workoutText}>Squats</Text>
@@ -37,7 +37,7 @@ export default function Workouts() {
 
           <TouchableOpacity style={styles.workoutCard}>
             <Image
-              source={workout3Image} // Use local image
+              source={workout3Image} // Gebruik lokale foto
               style={styles.workoutImage}
             />
             <Text style={styles.workoutText}>Lunges</Text>
@@ -45,14 +45,14 @@ export default function Workouts() {
 
           <TouchableOpacity style={styles.workoutCard}>
             <Image
-              source={workout4Image} // Use local image
+              source={workout4Image} // Gebruik lokale foto
               style={styles.workoutImage}
             />
             <Text style={styles.workoutText}>Planks</Text>
           </TouchableOpacity>
         </View>
     
-        {/* Bottom Navigation Bar */}
+        {/* Bottom Navigatie Bar */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => router.push('/home')}>
             <MaterialIcons name="home" size={24} color="gray" />

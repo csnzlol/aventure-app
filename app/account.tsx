@@ -9,6 +9,7 @@ export default function AccountSettings() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(false);
 
+  // weergeef de gebruikersnaam en profielfoto van de gebruiker
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -29,6 +30,7 @@ export default function AccountSettings() {
     fetchUserData();
   }, []);
 
+  // Uitloggen van de gebruiker
   const handleLogout = () => {
     AsyncStorage.removeItem('user_token');
     router.push('/login');
@@ -36,6 +38,7 @@ export default function AccountSettings() {
 
   const toggleNotifications = () => setIsNotificationsEnabled(previousState => !previousState);
 
+  // Render de accountinstellingen
   return (
     <ImageBackground 
       source={require('../assets/images/osiris_achtergrond.jpg')} 
@@ -43,7 +46,7 @@ export default function AccountSettings() {
       resizeMode="cover"
     >
       <ScrollView style={styles.container}>
-        {/* Profile Section */}
+        {/* Profiel Sectie */}
         <View style={styles.profileContainer}>
           {profileImage ? (
             <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -56,11 +59,11 @@ export default function AccountSettings() {
           </TouchableOpacity>
         </View>
 
-        {/* Settings Section */}
+        {/* Settings Sectie */}
         <View style={styles.settingsContainer}>
           <Text style={styles.sectionHeader}>Instellingen</Text>
 
-          {/* Notification Settings */}
+          {/* Notificaties Settings */}
           <View style={styles.settingItem}>
             <Text style={styles.settingTitle}>Notificaties</Text>
             <Switch
@@ -71,7 +74,7 @@ export default function AccountSettings() {
             />
           </View>
 
-          {/* Additional Settings */}
+          {/* Profiel bewerking */}
           <TouchableOpacity style={styles.settingItem} onPress={() => router.push('./profielBewerken')}>
             <Text style={styles.settingTitle}>Bewerk Profiel</Text>
           </TouchableOpacity>

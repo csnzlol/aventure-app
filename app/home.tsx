@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 
 const router = useRouter();
 
+// Definieer de typen voor de navigatieparameters van de root stack
 type RootStackParamList = {
   Home: undefined;
   Workouts: undefined;
@@ -16,6 +17,7 @@ type RootStackParamList = {
   WorkoutDetail: { exerciseId: string }; 
 };
 
+// Definieer de typen voor de navigatie- en routeprops van het Home-scherm
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 
@@ -27,8 +29,9 @@ type Props = {
 export default function Home({ navigation }: Props) {
   const [userName, setUserName] = useState('');
   const [greeting, setGreeting] = useState('');
-  const [bmi, setBMI] = useState<number | null>(null); // Initialize as number or null
+  const [bmi, setBMI] = useState<number | null>(null); 
 
+  // Functie om een begroeting te krijgen op basis van het huidige uur van de dag
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Goedemorgen';
@@ -41,14 +44,14 @@ export default function Home({ navigation }: Props) {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          // Fetch user name
+          // Haal gebruikersnaam op
           const response = await fetch(`http://35.180.43.172/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);
           }
 
-          // Fetch latest BMI
+          // Haal BMI op
           const bmiResponse = await fetch('http://35.180.43.172/api/getBMI.php', {
             method: 'POST',
             headers: {
@@ -58,9 +61,9 @@ export default function Home({ navigation }: Props) {
           });
           const bmiData = await bmiResponse.json();
           if (bmiResponse.ok && bmiData.success && bmiData.bmi) {
-            setBMI(Number(bmiData.bmi)); // Ensure BMI is a number
+            setBMI(Number(bmiData.bmi)); // Zet BMI als een getal
           } else {
-            setBMI(null); // Set to null if no BMI is available
+            setBMI(null); // Zet BMI op null als er geen BMI is
           }
         }
       } catch (error) {
@@ -72,6 +75,8 @@ export default function Home({ navigation }: Props) {
     setGreeting(getGreeting());
   }, []);
 
+
+  // Lijst van workouts met afbeeldingen
   const workoutImages = [
     { id: '1', title: 'Push Ups', image: require('../assets/workouts/pushups.jpg') },
     { id: '2', title: 'Squats', image: require('../assets/workouts/squats.jpg') },
@@ -110,7 +115,7 @@ export default function Home({ navigation }: Props) {
               <Text style={styles.statusValue}>⏱</Text>
             </View>
 
-            {/* User's BMI */}
+            {/* Gebruiker's BMI */}
             <View style={styles.statusBox}>
               <Text style={styles.statusTitle}>Jouw BMI</Text>
               <Text style={styles.statusValue}>
@@ -120,7 +125,7 @@ export default function Home({ navigation }: Props) {
           </View>
         </View>
 
-        {/* Nieuwe Workouts Section */}
+        {/* Nieuwe Workouts Sectie */}
         <Text style={styles.workoutHeader}>Ontdek nieuwe workouts</Text>
         <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
           {workoutImages.map((workout) => (
@@ -135,7 +140,7 @@ export default function Home({ navigation }: Props) {
           ))}
         </ScrollView>
 
-        {/* Bottom Navigation Bar */}
+        {/* Bottom Navigatie Bar */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
             <MaterialIcons name="home" size={24} color="lightblue" />

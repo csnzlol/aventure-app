@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, SafeAreaView, ImageBackground } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage to get the logged-in user's email
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage om gebruikersgegevens op te slaan
 import { useRouter } from 'expo-router';
 
 export default function PrivacyScreen() {
-  const [userEmail, setUserEmail] = useState<string | null>(null); // State to store the user's email
+  const [userEmail, setUserEmail] = useState<string | null>(null); // Gebruikers email op slaan
   const router = useRouter();
 
-  // Fetch the logged-in user's email from AsyncStorage when the component mounts
+  // Haal het e-mailadres van de ingelogde gebruiker op uit AsyncStorage wanneer de component wordt gemount.
   useEffect(() => {
     const fetchUserEmail = async () => {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          setUserEmail(email); // Set the user's email in the state
+          setUserEmail(email); // Stel het e-mailadres van de gebruiker in de state in.
         }
       } catch (error) {
         console.error('Failed to retrieve user email:', error);
@@ -47,17 +47,17 @@ export default function PrivacyScreen() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: userEmail }), // Use the logged-in user's email
+        body: JSON.stringify({ email: userEmail }), // Gebruik het e-mailadres van de ingelogde gebruiker.
       });
 
       const data = await response.json();
       
-      console.log('API Response:', data); // Log the entire API response
+      console.log('API Response:', data); // Log de volledige API-respons in de console.
 
       // Direct user redirection if the account deletion is successful
       if (data.success) {
         console.log('Account successfully deleted. Redirecting to register page...');
-        router.push('/register'); // Redirect to registration page after account deletion
+        router.push('/register'); // Redirect naar de registratiepagina na het verwijderen van het account.
       } else {
         Alert.alert('Fout', data.message || 'Er is iets misgegaan. Probeer het later opnieuw.');
       }
@@ -78,7 +78,7 @@ export default function PrivacyScreen() {
               Hier kun je jouw privacy-instellingen beheren en bepalen hoe we jouw gegevens gebruiken. Bekijk hieronder de beschikbare opties.
             </Text>
 
-            {/* Manage data option */}
+            {/* Beheer data optie */}
             <TouchableOpacity style={styles.option} onPress={() => Alert.alert('Gegevens beheren', 'Je kunt je gegevens hier beheren.')}>
               <View style={styles.optionContent}>
                 <MaterialIcons name="storage" size={24} color="black" />
@@ -96,7 +96,7 @@ export default function PrivacyScreen() {
               <MaterialIcons name="chevron-right" size={24} color="gray" />
             </TouchableOpacity>
 
-            {/* Delete account */}
+            {/* Verwijder account */}
             <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAccount}>
               <Text style={styles.deleteButtonText}>Account Verwijderen</Text>
             </TouchableOpacity>
