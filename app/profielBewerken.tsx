@@ -18,7 +18,7 @@ export default function EditProfileScreen() {
         const savedProfileImage = await AsyncStorage.getItem('profile_image'); // Fetch saved profile image URI
 
         if (email) {
-          const response = await fetch(`http://13.38.96.31/api/getUser.php?email=${email}`);
+          const response = await fetch(`http://35.180.43.172/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);

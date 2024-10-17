@@ -42,7 +42,7 @@ export default function PrivacyScreen() {
     }
 
     try {
-      const response = await fetch('http://13.38.96.31/api/deleteAccount.php', {
+      const response = await fetch('http://35.180.43.172/api/deleteAccount.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
