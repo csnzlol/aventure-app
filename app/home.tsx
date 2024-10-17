@@ -27,6 +27,7 @@ type Props = {
 export default function Home({ navigation }: Props) {
   const [userName, setUserName] = useState('');
   const [greeting, setGreeting] = useState('');
+  const [bmi, setBMI] = useState<number | null>(null); // Initialize as number or null
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -36,15 +37,30 @@ export default function Home({ navigation }: Props) {
   };
 
   useEffect(() => {
-    const fetchUserName = async () => {
+    const fetchUserData = async () => {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          
+          // Fetch user name
           const response = await fetch(`http://35.180.43.172/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok) {
             setUserName(data.name);
+          }
+
+          // Fetch latest BMI
+          const bmiResponse = await fetch('http://35.180.43.172/api/getBMI.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+          });
+          const bmiData = await bmiResponse.json();
+          if (bmiResponse.ok && bmiData.success && bmiData.bmi) {
+            setBMI(Number(bmiData.bmi)); // Ensure BMI is a number
+          } else {
+            setBMI(null); // Set to null if no BMI is available
           }
         }
       } catch (error) {
@@ -52,7 +68,7 @@ export default function Home({ navigation }: Props) {
       }
     };
 
-    fetchUserName();
+    fetchUserData();
     setGreeting(getGreeting());
   }, []);
 
@@ -92,6 +108,14 @@ export default function Home({ navigation }: Props) {
             <View style={styles.statusBox}>
               <Text style={styles.statusTitle}>Bestede Tijd</Text>
               <Text style={styles.statusValue}>⏱</Text>
+            </View>
+
+            {/* User's BMI */}
+            <View style={styles.statusBox}>
+              <Text style={styles.statusTitle}>Jouw BMI</Text>
+              <Text style={styles.statusValue}>
+                {bmi !== null ? bmi.toFixed(1) : 'N/A'}  {/* Render BMI or N/A */}
+              </Text>
             </View>
           </View>
         </View>

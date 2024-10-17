@@ -47,6 +47,13 @@ export default function Index() {
       >
         <Text style={styles.loginButtonText}>Settings</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/bmi')}
+      >
+        <Text style={styles.loginButtonText}>BMI</Text>
+      </TouchableOpacity>
     </View>
   );
 }
