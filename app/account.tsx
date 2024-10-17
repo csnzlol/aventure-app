@@ -52,7 +52,7 @@ export default function AccountSettings() {
           )}
           <Text style={styles.userName}>{userName}</Text>
           <TouchableOpacity onPress={handleLogout}>
-            <Text style={styles.logoutText}>Log out ☺️</Text>
+            <Text style={styles.logoutText}>Uitloggen</Text>
           </TouchableOpacity>
         </View>
 
@@ -72,7 +72,7 @@ export default function AccountSettings() {
           </View>
 
           {/* Additional Settings */}
-          <TouchableOpacity style={styles.settingItem} onPress={() => router.push('/edit-profile')}>
+          <TouchableOpacity style={styles.settingItem} onPress={() => router.push('./profielBewerken')}>
             <Text style={styles.settingTitle}>Bewerk Profiel</Text>
           </TouchableOpacity>
 
