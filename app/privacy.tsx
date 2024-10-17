@@ -54,9 +54,10 @@ export default function PrivacyScreen() {
       
       console.log('API Response:', data); // Log the entire API response
 
+      // Direct user redirection if the account deletion is successful
       if (data.success) {
-        Alert.alert('Account Verwijderd', 'Je account is succesvol verwijderd.');
-        router.push('/login'); // Redirect to login page after account deletion
+        console.log('Account successfully deleted. Redirecting to register page...');
+        router.push('/register'); // Redirect to registration page after account deletion
       } else {
         Alert.alert('Fout', data.message || 'Er is iets misgegaan. Probeer het later opnieuw.');
       }
