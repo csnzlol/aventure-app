@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 
 export default function Settings() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string>('Loading...'); // Ensure userName is initialized as a string
+  const [userName, setUserName] = useState<string>('Loading...'); 
   const router = useRouter();
 
   useEffect(() => {
@@ -27,17 +27,17 @@ export default function Settings() {
       try {
         const email = await AsyncStorage.getItem('user_email');
         if (email) {
-          const response = await fetch(`http://35.180.43.172/api/getUser.php?email=${email}`);
+          const response = await fetch(`http://13.38.96.31/api/getUser.php?email=${email}`);
           const data = await response.json();
           if (response.ok && data.name) {
-            setUserName(data.name); // Set user's name from API response
+            setUserName(data.name); // Stel de gebruikersnaam in vanuit de API-respons.
           } else {
-            setUserName('Unknown User'); // Fallback if API does not return a name
+            setUserName('Unknown User'); // Terugvaloptie als de API geen naam retourneert.
           }
         }
       } catch (error) {
         console.error('Failed to fetch user data:', error);
-        setUserName('Error fetching name'); // Handle error
+        setUserName('Error fetching name'); // Fout afhandeling
       }
     };
 
@@ -45,10 +45,11 @@ export default function Settings() {
     fetchUserName();
   }, []);
 
+  // Afbeelding selecteren uit de galerij met permissie
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      Alert.alert("Permission to access gallery is required!");
+      Alert.alert("Toestemming om toegang te krijgen tot de galerij is vereist!");
       return;
     }
 
@@ -91,7 +92,6 @@ export default function Settings() {
               <Text style={styles.changePhotoText}>Foto Aanpassen</Text>
             </TouchableOpacity>
 
-            {/* Ensure userName is always a string */}
             <Text style={styles.profileName}>{userName}</Text>
 
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
@@ -100,6 +100,7 @@ export default function Settings() {
             </TouchableOpacity>
           </View>
 
+          {/* Opties */}
           <View style={styles.optionsContainer}>
             <TouchableOpacity style={styles.option} onPress={() => router.push('./account')}>
               <View style={styles.optionContent}>
