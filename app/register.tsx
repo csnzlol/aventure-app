@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } 
 import { useRouter } from 'expo-router';
 
 export default function RegisterScreen() {
-  const [userName, setUserName] = useState(''); // State for the Name
+  const [userName, setUserName] = useState(''); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,14 +15,14 @@ export default function RegisterScreen() {
       return;
     }
 
-    // Make API request to PHP backend to register the user
+    
     fetch('http://35.180.43.172/api/register.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: userName,  // Include name for registration
+        name: userName,  
         email,
         password,
       }),
@@ -31,9 +31,9 @@ export default function RegisterScreen() {
       .then(data => {
         if (data.message === 'User registered successfully') {
           console.log('Registration successful');
-          router.push('/login'); // Redirect to login page
+          router.push('/login'); // Redirect naar login
         } else {
-          console.log(data.message); // Show error message
+          console.log(data.message); // Toon foutmelding
         }
       })
       .catch(error => {
@@ -50,17 +50,17 @@ export default function RegisterScreen() {
         <View style={styles.registerBox}>
           <Text style={styles.registerTitle}>Maak Een Account</Text>
 
-          {/* Name field */}
+          {/* Naam veld */}
           <TextInput
             style={styles.input}
-            placeholder="Voornaam"  // Placeholder for the user's first name
+            placeholder="Voornaam"  
             value={userName}
             onChangeText={setUserName}
             placeholderTextColor="#A9A9A9"
             autoCapitalize="words"
           />
 
-          {/* E-mail field */}
+          {/* E-mail veld */}
           <TextInput
             style={styles.input}
             placeholder="E-Mail"

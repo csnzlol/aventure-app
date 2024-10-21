@@ -8,21 +8,21 @@ const workoutImage = require('../assets/workouts/pushups.jpg');
 
 // New set of motivational quotes
 const quotes = [
-  "Push harder than yesterday if you want a different tomorrow.",
-  "Don’t stop when you’re tired. Stop when you’re done!",
-  "The pain you feel today will be the strength you feel tomorrow.",
-  "Success starts with self-discipline.",
+  "Duw harder dan gisteren als je een andere morgen wilt.",
+  "Stop niet als je moe bent. Stop als je klaar bent!",
+  "De pijn die je vandaag voelt, zal de kracht zijn die je morgen voelt.",
+  "Succes begint met zelfdiscipline.",
 ];
 
 export default function Pushups() {
   const router = useRouter();
-  const [timeLeft, setTimeLeft] = useState(60); // Countdown timer for challenge
+  const [timeLeft, setTimeLeft] = useState(60); // Countdown timer voor de challenge
   const [isRunning, setIsRunning] = useState(false);
-  const [setsCompleted, setSetsCompleted] = useState(0); // Number of completed sets
-  const [repsCompleted, setRepsCompleted] = useState(0); // Number of completed reps within a set
-  const [randomReps, setRandomReps] = useState(10); // Random number of reps for each set
-  const [currentQuote, setCurrentQuote] = useState(quotes[0]); // Motivational quote
-  const [progress, setProgress] = useState(0);  // Progress bar for session
+  const [setsCompleted, setSetsCompleted] = useState(0); // Nummer van voltooide sets
+  const [repsCompleted, setRepsCompleted] = useState(0); // Nummer van voltooide reps
+  const [randomReps, setRandomReps] = useState(10); // Random nummer van reps voor de set
+  const [currentQuote, setCurrentQuote] = useState(quotes[0]); // Motivatie quote
+  const [progress, setProgress] = useState(0);  // Progressie bar
 
   let timer: NodeJS.Timeout | null = null;
 
@@ -36,35 +36,35 @@ export default function Pushups() {
     }
 
     return () => {
-      if (timer) clearInterval(timer);  // Clean up timer on component unmount
+      if (timer) clearInterval(timer);  
     };
   }, [isRunning, timeLeft]);
 
   const handleStartWorkout = () => {
     setIsRunning(true);
-    setRandomReps(generateRandomReps()); // Generate random reps for the workout set
+    setRandomReps(generateRandomReps()); 
   };
 
   const handleCompleteSet = () => {
     if (repsCompleted >= randomReps) {
-      setSetsCompleted(setsCompleted + 1); // Increase set count
-      setCurrentQuote(generateRandomQuote()); // Change motivational quote
-      setProgress((prev) => prev + 0.25); // Update progress
-      Vibration.vibrate(500); // Vibrate on set completion
-      setRepsCompleted(0); // Reset reps for the next set
-      setRandomReps(generateRandomReps()); // Generate new reps for next set
+      setSetsCompleted(setsCompleted + 1); // Update sets
+      setCurrentQuote(generateRandomQuote()); // Update motivatie quote
+      setProgress((prev) => prev + 0.25); // Update progressie
+      Vibration.vibrate(500); // Tril de telefoon
+      setRepsCompleted(0); // Reset reps
+      setRandomReps(generateRandomReps()); // Genereer nieuwe random reps
     }
   };
 
   const handleRepIncrement = () => {
     setRepsCompleted(repsCompleted + 1);
     if (repsCompleted + 1 >= randomReps) {
-      handleCompleteSet(); // Complete set when reps goal is reached
+      handleCompleteSet(); // Voltooi de set
     }
   };
 
   const generateRandomReps = () => {
-    return Math.floor(Math.random() * (15 - 8 + 1)) + 8;  // Random number of reps between 8-15
+    return Math.floor(Math.random() * (15 - 8 + 1)) + 8;  // Random nummer tussen 8 en 15
   };
 
   const generateRandomQuote = () => {

@@ -119,7 +119,7 @@ export default function Home({ navigation }: Props) {
             <View style={styles.statusBox}>
               <Text style={styles.statusTitle}>Jouw BMI</Text>
               <Text style={styles.statusValue}>
-                {bmi !== null ? bmi.toFixed(1) : 'N/A'}  {/* Render BMI or N/A */}
+                {bmi !== null ? bmi.toFixed(1) : 'N/A'}  {/* Laat BMI of N/A */}
               </Text>
             </View>
           </View>
