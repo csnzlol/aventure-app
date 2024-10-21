@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';  // For progress tracking bars
 
-const workoutImage = require('../assets/workouts/pushups.jpg');
+const workoutImage = require('../assets/workouts/squats.jpg');
 
 // New set of motivational quotes
 const quotes = [
@@ -90,7 +90,7 @@ export default function Pushups() {
     <ImageBackground source={require('../assets/images/osiris_achtergrond.jpg')} style={styles.background}>
       <View style={styles.container}>
         {/* Title */}
-        <Text style={styles.title}>Push Ups</Text>
+        <Text style={styles.title}>Squats</Text>
 
         {/* Workout Image */}
         <Image source={workoutImage} style={styles.workoutImage} />

@@ -24,17 +24,17 @@ export default function Workouts() {
             <Text style={styles.workoutText}>Push Ups</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('./workoutDetail/squats')}>
+          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('/squats')}>
             <Image source={workout2Image} style={styles.workoutImage} />
             <Text style={styles.workoutText}>Squats</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('./workoutDetail/lunges')}>
+          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('/lunges')}>
             <Image source={workout3Image} style={styles.workoutImage} />
             <Text style={styles.workoutText}>Lunges</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('./workoutDetail/planks')}>
+          <TouchableOpacity style={styles.workoutCard} onPress={() => router.push('/planks')}>
             <Image source={workout4Image} style={styles.workoutImage} />
             <Text style={styles.workoutText}>Planks</Text>
           </TouchableOpacity>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   workoutCard: {
     width: '45%',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,

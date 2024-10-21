@@ -14,6 +14,7 @@ export default function AccountSettings() {
     const fetchUserData = async () => {
       try {
         const email = await AsyncStorage.getItem('user_email');
+        const profileImage = await AsyncStorage.getItem('profileImage');
         if (email) {
           const response = await fetch(`http://35.180.43.172/api/getUser.php?email=${email}`);
           const data = await response.json();
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    color: '#808080',
+    color: 'white',
   },
   settingsContainer: {
     marginTop: 30,
