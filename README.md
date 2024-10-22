@@ -1,8 +1,8 @@
-## Fitness App
+# Fitness App
 
 Dit is een complete fitness-app, ontwikkeld met React Native en Expo, waar gebruikers hun voortgang kunnen bijhouden, workouts kunnen voltooien, prestaties kunnen behalen, hun profiel kunnen beheren en meer. De app is ontworpen om een gebruiksvriendelijke en motiverende ervaring te bieden aan fitnessliefhebbers.
 
-## Functies
+# Functies
 
 ## Gebruikersbeheer: 
 Gebruikers kunnen inloggen, zich registreren en hun profiel bewerken, inclusief de profielfoto.
@@ -29,28 +29,28 @@ Gebruikers kunnen een profielfoto kiezen vanuit hun galerij.
 Gebruikers kunnen hun account verwijderen via de privacy-instellingen.
 
 
-## Installatie
+# Installatie
 
 Volg de onderstaande stappen om het project lokaal te draaien:
 
 Kloon de repository:
-```bash
+bash
 Copy code
-git clone https://github.com/jouw-username/fitness-app.git```
+git clone https://github.com/jouw-username/fitness-app.git
 
 Installeer de dependencies:
-```bash
+bash
 Copy code
 cd fitness-app
-npm install```
+npm install
 
 Start de app met Expo:
-``` bash
+bash
 Copy code
-expo start ```
+expo start
 
 
-API-configuratie
+## API-configuratie
 
 Dit project maakt gebruik van een externe API om gebruikersgegevens, BMI en workout-prestaties op te slaan en op te halen. Zorg ervoor dat je de juiste API-eindpunten hebt ingesteld voor login, registratie en gegevensbeheer.
 
@@ -67,9 +67,10 @@ Copy code
 /components       # Reusable components zoals StepCounter
 /screens          # Verschillende schermen zoals login, instellingen, prestaties
 /api              # Bevat PHP-bestanden voor de backend-API
-Functiepagina's
 
-Workouts
+# Functiepagina's
+
+## Workouts
 De app bevat vier hoofdpagina's voor verschillende workouts:
 
 Push-ups: Houdt sets en herhalingen bij voor push-ups.
@@ -78,5 +79,5 @@ Lunges: Volgt de voortgang voor lunges.
 Planks: Volgt de tijd en sets voor planken.
 Elke workoutpagina bevat een motiverende timer, willekeurige citaten, en het aantal voltooide sets en herhalingen.
 
-Prestaties
+## Prestaties
 Op de Achievements-pagina kunnen gebruikers hun vrijgespeelde prestaties bekijken. Een animatie en trilling geven feedback wanneer een prestatie is behaald. De prestaties worden lokaal opgeslagen met AsyncStorage.
