@@ -8,37 +8,37 @@ const achievementsData = [
   {
     title: '10 Workouts Voltooid',
     description: 'Je hebt 10 workouts voltooid!',
-    icon: 'https://your-image-url.com/trophy.png',
+    icon: '../assets/workouts/achievement.png',
     completed: true, // Example of a completed achievement
   },
   {
     title: 'Eerste Week Streak',
     description: 'Je hebt een hele week oefeningen gedaan!',
-    icon: 'https://your-image-url.com/streak.png',
+    icon: '../assets/workouts/achievement.jpg',
     completed: false,
   },
   {
     title: '500 Push-ups',
     description: 'Je hebt 500 push-ups voltooid in totaal!',
-    icon: 'https://your-image-url.com/pushup.png',
+    icon: '../assets/workouts/achievement.jpg',
     completed: false,
   },
   {
     title: '50 Squats',
     description: 'Je hebt 50 squats in totaal gedaan!',
-    icon: 'https://your-image-url.com/squat.png',
+    icon: '../assets/workouts/achievement.jpg',
     completed: true,
   },
   {
     title: '10 Sets Voltooid',
     description: 'Je hebt 10 sets voltooid in één oefening!',
-    icon: 'https://your-image-url.com/set.png',
+    icon: '../assets/workouts/achievement.jpg',
     completed: true,
   },
   {
     title: '1000 Calorieën Verbrand',
     description: 'Je hebt in totaal 1000 calorieën verbrand!',
-    icon: 'https://your-image-url.com/calories.png',
+    icon: '../assets/workouts/achievement.jpg',
     completed: false,
   },
 ];
