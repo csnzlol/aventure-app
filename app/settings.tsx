@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ImageBackground, StyleSheet, SafeAreaView, Alert } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
+import { MaterialIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 
 export default function Settings() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -122,6 +124,14 @@ export default function Settings() {
               <View style={styles.optionContent}>
                 <MaterialIcons name="notifications" size={24} color="black" />
                 <Text style={styles.optionText}>Notificaties</Text>
+              </View>
+              <MaterialIcons name="chevron-right" size={24} color="gray" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.option} onPress={() => router.push('./achievements')}>
+              <View style={styles.optionContent}>
+                <MaterialCommunityIcons name="medal" size={24} color="black" />
+                <Text style={styles.optionText}>Achievements</Text>
               </View>
               <MaterialIcons name="chevron-right" size={24} color="gray" />
             </TouchableOpacity>
