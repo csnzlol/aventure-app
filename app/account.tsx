@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 24,
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
     marginVertical: 10,
   },
   logoutText: {
     fontSize: 16,
-    color: 'white',
+    color: 'light-grey',
   },
   settingsContainer: {
     marginTop: 30,
