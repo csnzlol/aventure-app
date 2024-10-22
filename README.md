@@ -34,15 +34,15 @@ Gebruikers kunnen hun account verwijderen via de privacy-instellingen.
 Volg de onderstaande stappen om het project lokaal te draaien:
 
 Kloon de repository:
-``` bash
+```bash
 Copy code
-git clone https://github.com/jouw-username/fitness-app.git ```
+git clone https://github.com/jouw-username/fitness-app.git```
 
 Installeer de dependencies:
-``` bash
+```bash
 Copy code
 cd fitness-app
-npm install ```
+npm install```
 
 Start de app met Expo:
 ``` bash
