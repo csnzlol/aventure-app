@@ -1,30 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground, Animated, Vibration, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground, Vibration, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import * as Progress from 'react-native-progress';  // Voor voortgangsbalken
+import * as Progress from 'react-native-progress';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const workoutImage = require('../assets/workouts/planks.jpg');
 
-// Nieuwe set motiverende citaten
+// Motivatie citaten
 const quotes = [
   "Duw harder dan gisteren als je een andere morgen wilt.",
   "Stop niet als je moe bent. Stop als je klaar bent!",
   "De pijn die je vandaag voelt, zal de kracht zijn die je morgen voelt.",
-  "Success starts with self-discipline.",
+  "Succes begint met zelfdiscipline.",
 ];
 
-export default function Pushups() {
+export default function Planks() {
   const router = useRouter();
-  const [timeLeft, setTimeLeft] = useState(60); // Countdown timer voor de challenge
+  const [timeLeft, setTimeLeft] = useState(60); 
   const [isRunning, setIsRunning] = useState(false);
-  const [setsCompleted, setSetsCompleted] = useState(0); // Nummer van voltooide sets
-  const [repsCompleted, setRepsCompleted] = useState(0); // Nummer van voltooide reps
-  const [randomReps, setRandomReps] = useState(10); // Random nummer van reps voor de set
-  const [currentQuote, setCurrentQuote] = useState(quotes[0]); // Motivatie quote
-  const [progress, setProgress] = useState(0);  // Progressie bar
+  const [setsCompleted, setSetsCompleted] = useState(0); 
+  const [repsCompleted, setRepsCompleted] = useState(0); 
+  const [randomReps, setRandomReps] = useState(10); 
+  const [currentQuote, setCurrentQuote] = useState(quotes[0]);
+  const [progress, setProgress] = useState(0);
 
   let timer: NodeJS.Timeout | null = null;
+
+  useEffect(() => {
+    const loadSetsData = async () => {
+      const storedSets = await AsyncStorage.getItem('planks_sets');
+      if (storedSets) {
+        setSetsCompleted(parseInt(storedSets, 10));
+      }
+    };
+    loadSetsData();
+  }, []);
 
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
@@ -36,7 +47,7 @@ export default function Pushups() {
     }
 
     return () => {
-      if (timer) clearInterval(timer);  
+      if (timer) clearInterval(timer);
     };
   }, [isRunning, timeLeft]);
 
@@ -45,26 +56,29 @@ export default function Pushups() {
     setRandomReps(generateRandomReps()); 
   };
 
-  const handleCompleteSet = () => {
+  const handleCompleteSet = async () => {
     if (repsCompleted >= randomReps) {
-      setSetsCompleted(setsCompleted + 1); // Update sets
-      setCurrentQuote(generateRandomQuote()); // Update motivatie quote
-      setProgress((prev) => prev + 0.25); // Update progressie
-      Vibration.vibrate(500); // Tril de telefoon
-      setRepsCompleted(0); // Reset reps
-      setRandomReps(generateRandomReps()); // Genereer nieuwe random reps
+      const newSetsCompleted = setsCompleted + 1;
+      setSetsCompleted(newSetsCompleted); 
+      setCurrentQuote(generateRandomQuote());
+      setProgress((prev) => prev + 0.25); 
+      Vibration.vibrate(500); 
+      setRepsCompleted(0); 
+      setRandomReps(generateRandomReps());
+
+      await AsyncStorage.setItem('planks_sets', newSetsCompleted.toString());
     }
   };
 
   const handleRepIncrement = () => {
     setRepsCompleted(repsCompleted + 1);
     if (repsCompleted + 1 >= randomReps) {
-      handleCompleteSet(); // Voltooi de set
+      handleCompleteSet(); 
     }
   };
 
   const generateRandomReps = () => {
-    return Math.floor(Math.random() * (15 - 8 + 1)) + 8;  // Random nummer tussen 8 en 15
+    return Math.floor(Math.random() * (15 - 8 + 1)) + 8;
   };
 
   const generateRandomQuote = () => {
@@ -79,58 +93,48 @@ export default function Pushups() {
 
   const handleReset = () => {
     setIsRunning(false);
-    setTimeLeft(60); // Reset timer
-    setSetsCompleted(0); // Reset sets
-    setRepsCompleted(0); // Reset reps
-    setProgress(0); // Reset voortgangsbalken
-    setCurrentQuote(quotes[0]); // Reset motiverende citaten
+    setTimeLeft(60); 
+    setSetsCompleted(0); 
+    setRepsCompleted(0); 
+    setProgress(0); 
+    setCurrentQuote(quotes[0]);
+    AsyncStorage.removeItem('planks_sets');
   };
 
   return (
     <ImageBackground source={require('../assets/images/osiris_achtergrond.jpg')} style={styles.background}>
       <View style={styles.container}>
-        {/* Title */}
         <Text style={styles.title}>Planks</Text>
-
-        {/* Workout Image */}
         <Image source={workoutImage} style={styles.workoutImage} />
 
-        {/* Set Progress and Reps */}
         <View style={styles.statsContainer}>
           <Text style={styles.statsText}>Set: {setsCompleted + 1}</Text>
           <Text style={styles.statsText}>Reps: {repsCompleted}/{randomReps}</Text>
         </View>
 
-        {/* Progress Bar for Set Completion */}
         <Progress.Bar progress={progress} width={300} height={15} color="#28A745" style={styles.progressBar} />
 
-        {/* Motivational Quote */}
         <Text style={styles.motivationalQuote}>{currentQuote}</Text>
 
-        {/* Start/Pause Workout Button */}
         <TouchableOpacity onPress={handleStartWorkout} style={styles.startButton}>
-          <Text style={styles.startButtonText}>{isRunning ? 'Continue' : 'Start Workout'}</Text>
+          <Text style={styles.startButtonText}>{isRunning ? 'Doorgaan' : 'Start Oefening'}</Text>
         </TouchableOpacity>
 
-        {/* Add Rep Button */}
         <TouchableOpacity onPress={handleRepIncrement} style={styles.repButton}>
           <Text style={styles.repButtonText}>+1 Rep</Text>
         </TouchableOpacity>
 
-        {/* End Workout Button */}
         <TouchableOpacity onPress={handleEndWorkout} style={styles.endButton}>
-          <Text style={styles.endButtonText}>End Workout</Text>
+          <Text style={styles.endButtonText}>Stop Oefening</Text>
         </TouchableOpacity>
 
-        {/* Reset Workout Button */}
         <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
-          <Text style={styles.resetButtonText}>Reset Workout</Text>
+          <Text style={styles.resetButtonText}>Reset Oefening</Text>
         </TouchableOpacity>
 
-        {/* Back to Workouts Button */}
         <TouchableOpacity style={styles.backButton} onPress={() => router.push('/workouts')}>
           <MaterialIcons name="arrow-back" size={24} color="#444" />
-          <Text style={styles.backButtonText}>Back to Workouts</Text>
+          <Text style={styles.backButtonText}>Terug naar Workouts</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

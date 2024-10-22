@@ -1,29 +1,83 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, Alert, Animated } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AchievementScreen = () => {
+  const [pushupSets, setPushupSets] = useState(0); 
+  const [lungeSets, setLungeSets] = useState(0); 
+  const [plankSets, setPlankSets] = useState(0);
+  const [squatSets, setSquatSets] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const celebrationOpacity = useState(new Animated.Value(0))[0];
+
+  // Load workout data from AsyncStorage
+  useEffect(() => {
+    const fetchSetsData = async () => {
+      const storedPushupSets = await AsyncStorage.getItem('pushups_sets');
+      const storedLungeSets = await AsyncStorage.getItem('lunges_sets');
+      const storedPlankSets = await AsyncStorage.getItem('planks_sets');
+      const storedSquatSets = await AsyncStorage.getItem('squats_sets');
+
+      if (storedPushupSets) setPushupSets(parseInt(storedPushupSets, 10));
+      if (storedLungeSets) setLungeSets(parseInt(storedLungeSets, 10));
+      if (storedPlankSets) setPlankSets(parseInt(storedPlankSets, 10));
+      if (storedSquatSets) setSquatSets(parseInt(storedSquatSets, 10));
+    };
+    fetchSetsData();
+  }, []);
+
+  // Celebration effect for achievement completion
+  const triggerCelebration = () => {
+    setShowCelebration(true);
+    Animated.sequence([
+      Animated.timing(celebrationOpacity, { toValue: 1, duration: 500, useNativeDriver: true }),
+      Animated.timing(celebrationOpacity, { toValue: 0, duration: 500, useNativeDriver: true }),
+    ]).start(() => setShowCelebration(false));
+  };
+
+  const checkAchievements = () => {
+    if (pushupSets >= 10 || lungeSets >= 10 || plankSets >= 10 || squatSets >= 10) {
+      Alert.alert("Gefeliciteerd!", "Je hebt 10 sets voltooid!");
+      triggerCelebration();
+    }
+  };
+
+  useEffect(() => {
+    checkAchievements();
+  }, [pushupSets, lungeSets, plankSets, squatSets]);
+
   const achievements = [
     {
-      title: '10 Workouts Completed',
-      description: 'You’ve completed 10 workouts. Keep it up!',
+      title: '10 Workouts Voltooid',
+      description: 'Je hebt 10 workouts voltooid. Ga zo door!',
       icon: 'https://your-image-url.com/trophy.png',
     },
     {
-      title: 'First Week Streak',
-      description: 'You completed a full week of workouts!',
-      icon: 'https://your-image-url.com/streak.png',
+      title: `Push-Ups Kampioen (${pushupSets} Sets)`,
+      description: `Je hebt ${pushupSets} push-up sets voltooid!`,
+      icon: 'https://your-image-url.com/pushup.png',
     },
     {
-      title: '500 Push-ups',
-      description: 'You’ve done 500 push-ups in total.',
-      icon: 'https://your-image-url.com/pushup.png',
+      title: `Lunges Kampioen (${lungeSets} Sets)`,
+      description: `Je hebt ${lungeSets} lunge sets voltooid!`,
+      icon: 'https://your-image-url.com/lunge.png',
+    },
+    {
+      title: `Planks Kampioen (${plankSets} Sets)`,
+      description: `Je hebt ${plankSets} plank sets voltooid!`,
+      icon: 'https://your-image-url.com/plank.png',
+    },
+    {
+      title: `Squats Kampioen (${squatSets} Sets)`,
+      description: `Je hebt ${squatSets} squat sets voltooid!`,
+      icon: 'https://your-image-url.com/squat.png',
     },
   ];
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Achievements</Text>
-      
+      <Text style={styles.header}>Prestaties</Text>
+
       {/* Achievement Cards */}
       {achievements.map((achievement, index) => (
         <View key={index} style={styles.achievementCard}>
@@ -36,6 +90,13 @@ const AchievementScreen = () => {
           </View>
         </View>
       ))}
+
+      {/* Celebration Effect */}
+      {showCelebration && (
+        <Animated.View style={[styles.celebration, { opacity: celebrationOpacity }]}>
+          <Text style={styles.celebrationText}>Gefeliciteerd!</Text>
+        </Animated.View>
+      )}
     </ScrollView>
   );
 };
@@ -80,6 +141,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6B6B6B',
     marginTop: 5,
+  },
+  celebration: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -75 }, { translateY: -50 }],
+    backgroundColor: 'gold',
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  celebrationText: {
+    fontSize: 24,
+    color: '#FFF',
+    fontWeight: 'bold',
   },
 });
 
