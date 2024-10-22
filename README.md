@@ -36,7 +36,7 @@ Volg de onderstaande stappen om het project lokaal te draaien:
 Kloon de repository:
 bash
 Copy code
-git clone https://github.com/jouw-username/fitness-app.git
+git clone https://github.com/csnzlol/aventure-app.git
 
 Installeer de dependencies:
 bash
