@@ -1,105 +1,112 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Alert, Animated } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, StyleSheet, ScrollView, Image, Animated, Vibration } from 'react-native';
+import { useRouter } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const AchievementScreen = () => {
-  const [pushupSets, setPushupSets] = useState(0); 
-  const [lungeSets, setLungeSets] = useState(0); 
-  const [plankSets, setPlankSets] = useState(0);
-  const [squatSets, setSquatSets] = useState(0);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const celebrationOpacity = useState(new Animated.Value(0))[0];
+// Example achievements data
+const achievementsData = [
+  {
+    title: '10 Workouts Voltooid',
+    description: 'Je hebt 10 workouts voltooid!',
+    icon: 'https://your-image-url.com/trophy.png',
+    completed: true, // Example of a completed achievement
+  },
+  {
+    title: 'Eerste Week Streak',
+    description: 'Je hebt een hele week oefeningen gedaan!',
+    icon: 'https://your-image-url.com/streak.png',
+    completed: false,
+  },
+  {
+    title: '500 Push-ups',
+    description: 'Je hebt 500 push-ups voltooid in totaal!',
+    icon: 'https://your-image-url.com/pushup.png',
+    completed: false,
+  },
+  {
+    title: '50 Squats',
+    description: 'Je hebt 50 squats in totaal gedaan!',
+    icon: 'https://your-image-url.com/squat.png',
+    completed: true,
+  },
+  {
+    title: '10 Sets Voltooid',
+    description: 'Je hebt 10 sets voltooid in één oefening!',
+    icon: 'https://your-image-url.com/set.png',
+    completed: true,
+  },
+  {
+    title: '1000 Calorieën Verbrand',
+    description: 'Je hebt in totaal 1000 calorieën verbrand!',
+    icon: 'https://your-image-url.com/calories.png',
+    completed: false,
+  },
+];
 
-  // Load workout data from AsyncStorage
+export default function AchievementScreen() {
+  const [achievements, setAchievements] = useState(achievementsData);
+  const [animatedValue] = useState(new Animated.Value(1)); // Animation state
+  const router = useRouter();
+
   useEffect(() => {
-    const fetchSetsData = async () => {
-      const storedPushupSets = await AsyncStorage.getItem('pushups_sets');
-      const storedLungeSets = await AsyncStorage.getItem('lunges_sets');
-      const storedPlankSets = await AsyncStorage.getItem('planks_sets');
-      const storedSquatSets = await AsyncStorage.getItem('squats_sets');
-
-      if (storedPushupSets) setPushupSets(parseInt(storedPushupSets, 10));
-      if (storedLungeSets) setLungeSets(parseInt(storedLungeSets, 10));
-      if (storedPlankSets) setPlankSets(parseInt(storedPlankSets, 10));
-      if (storedSquatSets) setSquatSets(parseInt(storedSquatSets, 10));
-    };
-    fetchSetsData();
+    // Run animation for achievements
+    achievements.forEach((achievement, index) => {
+      if (achievement.completed) {
+        unlockAchievementAnimation(index);
+      }
+    });
   }, []);
 
-  // Celebration effect for achievement completion
-  const triggerCelebration = () => {
-    setShowCelebration(true);
+  const unlockAchievementAnimation = (index: number) => {
     Animated.sequence([
-      Animated.timing(celebrationOpacity, { toValue: 1, duration: 500, useNativeDriver: true }),
-      Animated.timing(celebrationOpacity, { toValue: 0, duration: 500, useNativeDriver: true }),
-    ]).start(() => setShowCelebration(false));
+      Animated.timing(animatedValue, {
+        toValue: 1.2,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(animatedValue, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      Vibration.vibrate(300); // Vibration feedback
+      // Show congratulation message
+      console.log(`Achievement Unlocked: ${achievements[index].title}`);
+    });
   };
 
-  const checkAchievements = () => {
-    if (pushupSets >= 10 || lungeSets >= 10 || plankSets >= 10 || squatSets >= 10) {
-      Alert.alert("Gefeliciteerd!", "Je hebt 10 sets voltooid!");
-      triggerCelebration();
-    }
+  const renderAchievements = () => {
+    return achievements.map((achievement, index) => {
+      return (
+        <Animated.View
+          key={index}
+          style={[
+            styles.achievementCard,
+            achievement.completed && styles.achievementCompleted,
+            { transform: [{ scale: achievement.completed ? animatedValue : 1 }] },
+          ]}
+        >
+          <Image source={{ uri: achievement.icon }} style={styles.icon} />
+          <View style={styles.textContainer}>
+            <Text style={styles.achievementTitle}>{achievement.title}</Text>
+            <Text style={styles.achievementDescription}>{achievement.description}</Text>
+          </View>
+          {achievement.completed && (
+            <MaterialIcons name="check-circle" size={24} color="green" style={styles.completedIcon} />
+          )}
+        </Animated.View>
+      );
+    });
   };
-
-  useEffect(() => {
-    checkAchievements();
-  }, [pushupSets, lungeSets, plankSets, squatSets]);
-
-  const achievements = [
-    {
-      title: '10 Workouts Voltooid',
-      description: 'Je hebt 10 workouts voltooid. Ga zo door!',
-      icon: 'https://your-image-url.com/trophy.png',
-    },
-    {
-      title: `Push-Ups Kampioen (${pushupSets} Sets)`,
-      description: `Je hebt ${pushupSets} push-up sets voltooid!`,
-      icon: 'https://your-image-url.com/pushup.png',
-    },
-    {
-      title: `Lunges Kampioen (${lungeSets} Sets)`,
-      description: `Je hebt ${lungeSets} lunge sets voltooid!`,
-      icon: 'https://your-image-url.com/lunge.png',
-    },
-    {
-      title: `Planks Kampioen (${plankSets} Sets)`,
-      description: `Je hebt ${plankSets} plank sets voltooid!`,
-      icon: 'https://your-image-url.com/plank.png',
-    },
-    {
-      title: `Squats Kampioen (${squatSets} Sets)`,
-      description: `Je hebt ${squatSets} squat sets voltooid!`,
-      icon: 'https://your-image-url.com/squat.png',
-    },
-  ];
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Prestaties</Text>
-
-      {/* Achievement Cards */}
-      {achievements.map((achievement, index) => (
-        <View key={index} style={styles.achievementCard}>
-          <Image source={{ uri: achievement.icon }} style={styles.icon} />
-          <View style={styles.textContainer}>
-            <Text style={styles.achievementTitle}>{achievement.title}</Text>
-            <Text style={styles.achievementDescription}>
-              {achievement.description}
-            </Text>
-          </View>
-        </View>
-      ))}
-
-      {/* Celebration Effect */}
-      {showCelebration && (
-        <Animated.View style={[styles.celebration, { opacity: celebrationOpacity }]}>
-          <Text style={styles.celebrationText}>Gefeliciteerd!</Text>
-        </Animated.View>
-      )}
+      {renderAchievements()}
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -124,6 +131,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  achievementCompleted: {
+    borderColor: '#FFD700', // Gold border for completed achievements
+    shadowColor: '#FFD700',
+    shadowOpacity: 0.6,
   },
   icon: {
     width: 50,
@@ -142,25 +156,7 @@ const styles = StyleSheet.create({
     color: '#6B6B6B',
     marginTop: 5,
   },
-  celebration: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -75 }, { translateY: -50 }],
-    backgroundColor: 'gold',
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  celebrationText: {
-    fontSize: 24,
-    color: '#FFF',
-    fontWeight: 'bold',
+  completedIcon: {
+    marginLeft: 10,
   },
 });
-
-export default AchievementScreen;
