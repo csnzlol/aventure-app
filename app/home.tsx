@@ -75,7 +75,6 @@ export default function Home({ navigation }: Props) {
     setGreeting(getGreeting());
   }, []);
 
-
   // Lijst van workouts met afbeeldingen
   const workoutImages = [
     { id: '1', title: 'Push Ups', image: require('../assets/workouts/pushups.jpg') },
@@ -92,36 +91,21 @@ export default function Home({ navigation }: Props) {
         {/* Header */}
         <Text style={styles.header}>{greeting}, {userName}</Text>
         <Text style={styles.subHeader}>Laten we aan de slag gaan</Text>
-
-        {/* Status Boxes */}
-        <View style={styles.statusContainer}>
-          <View style={styles.row}>
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Afgewerkt</Text>
-              <Text style={styles.statusValue}>💪</Text>
-            </View>
-
-            {/* Stappen */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Stappen 🥾</Text>
-              <StepCounter />
-            </View>
+        
+        {/* Stappen en BMI naast elkaar */}
+        <View style={styles.row}>
+          {/* Stappen */}
+          <View style={styles.statusBox}>
+            <Text style={styles.statusTitle}>Stappen 🥾</Text>
+            <StepCounter />
           </View>
 
-          <View style={styles.row}>
-            {/* Bestede Tijd */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Bestede Tijd</Text>
-              <Text style={styles.statusValue}>⏱</Text>
-            </View>
-
-            {/* Gebruiker's BMI */}
-            <View style={styles.statusBox}>
-              <Text style={styles.statusTitle}>Jouw BMI</Text>
-              <Text style={styles.statusValue}>
-                {bmi !== null ? bmi.toFixed(1) : 'N/A'}  {/* Laat BMI of N/A */}
-              </Text>
-            </View>
+          {/* Gebruiker's BMI */}
+          <View style={styles.statusBox}>
+            <Text style={styles.statusTitle}>Jouw BMI</Text>
+            <Text style={styles.statusValue}>
+              {bmi !== null ? bmi.toFixed(1) : 'N/A'}  {/* Laat BMI of N/A */}
+            </Text>
           </View>
         </View>
 
@@ -143,7 +127,7 @@ export default function Home({ navigation }: Props) {
         {/* Bottom Navigatie Bar */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => router.push('./home')}>
-            <MaterialIcons name="home" size={24} color="lightblue" />
+            <MaterialIcons name="home" size={24} color="gray" />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => router.push('./workouts')}>
@@ -190,13 +174,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
   },
-  statusContainer: {
-    width: '100%',
-    marginTop: 20,
-  },
   row: {
-    flexDirection: 'row',
+    flexDirection: 'row', // Make the boxes appear next to each other
     justifyContent: 'space-between',
+    width: '100%',
     marginBottom: 20,
   },
   statusBox: {
