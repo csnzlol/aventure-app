@@ -38,7 +38,7 @@ export default function EditProfileScreen() {
   const handlePickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      Alert.alert('Permission to access gallery is required!');
+      Alert.alert('Toestemming voor toegang tot galerie is vereist!');
       return;
     }
 
@@ -60,7 +60,7 @@ export default function EditProfileScreen() {
     try {
       const email = await AsyncStorage.getItem('user_email');
       if (!email) {
-        Alert.alert('Error', 'User not logged in');
+        Alert.alert('Error', 'Gebruiker niet ingelogd');
         return;
       }
 
@@ -83,14 +83,14 @@ export default function EditProfileScreen() {
 
       const data = await response.json();
       if (response.ok && data.success) {
-        Alert.alert('Success', 'Profile updated successfully!');
-        router.push('/account'); // Go back to account settings
+        Alert.alert('Success', 'Profiel succesvol bijgewerkt!');
+        router.push('/account'); // Ga terug naar accountinstellingen
       } else {
         Alert.alert('Error', data.message || 'Failed to update profile');
       }
     } catch (error) {
-      console.error('Failed to update profile:', error);
-      Alert.alert('Error', 'Failed to update profile');
+      console.error('FProfiel niet bijgewerkt:', error);
+      Alert.alert('Error', 'Profiel niet bijgewerkt');
     }
   };
 
