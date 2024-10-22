@@ -5,19 +5,19 @@ import { useRouter } from 'expo-router';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Use router to navigate programmatically
+  const router = useRouter(); // Gebruik router om programmatisch te navigeren
 
   return (
     <ImageBackground
-      source={require('../assets/images/login_aventure.jpg')} // Background image (ensure it is in the assets folder)
+      source={require('../assets/images/login_aventure.jpg')} // Achtergrondafbeelding (zorg ervoor dat deze in de map assets staat)
       style={styles.background}
     >
       <View style={styles.container}>
-        {/* Account Recovery */}
+        {/* Accountherstel */}
         <View style={styles.loginBox}>
           <Text style={styles.loginTitle}>Wachtwoord Herstellen</Text>
 
-          {/* E-mail field */}
+          {/* E-mail */}
           <TextInput
             style={styles.input}
             placeholder="E-Mail"
@@ -25,19 +25,19 @@ export default function LoginScreen() {
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            placeholderTextColor="#A9A9A9" // Light gray color for placeholder
+            placeholderTextColor="#A9A9A9" // Lichtgrijze kleur voor plaatsaanduiding
           />
 
           {/* Login Button */}
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => console.log('Account recovery pressed')} // Handle login logic here
+            onPress={() => console.log('Accountherstel ingedrukt')} // Hier logica voor inloggen afhandelen
           >
             <Text style={styles.loginButtonText}>LOG IN</Text>
           </TouchableOpacity>
 
           {/* Forgot password link */}
-          <TouchableOpacity onPress={() => console.log('Forgot password clicked')}>
+          <TouchableOpacity onPress={() => console.log('Wachtwoord vergeten klik')}>
             <Text style={styles.forgotPasswordText}>Wachtwoord vergeten?</Text>
           </TouchableOpacity>
         </View>

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground, Animated, Vibration, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import * as Progress from 'react-native-progress';  // For progress tracking bars
+import * as Progress from 'react-native-progress';  // Voor voortgangsbalken
 
 const workoutImage = require('../assets/workouts/planks.jpg');
 
-// New set of motivational quotes
+// Nieuwe set motiverende citaten
 const quotes = [
   "Duw harder dan gisteren als je een andere morgen wilt.",
   "Stop niet als je moe bent. Stop als je klaar bent!",
@@ -73,7 +73,7 @@ export default function Pushups() {
 
   const handleEndWorkout = () => {
     setIsRunning(false);
-    Alert.alert('Workout Completed', `You completed ${setsCompleted} sets!`);
+    Alert.alert('Training Voltooid', `Je hebt ${setsCompleted} sets voltooid!`);
     router.push('/workouts');
   };
 
@@ -82,8 +82,8 @@ export default function Pushups() {
     setTimeLeft(60); // Reset timer
     setSetsCompleted(0); // Reset sets
     setRepsCompleted(0); // Reset reps
-    setProgress(0); // Reset progress bar
-    setCurrentQuote(quotes[0]); // Reset motivational quote
+    setProgress(0); // Reset voortgangsbalken
+    setCurrentQuote(quotes[0]); // Reset motiverende citaten
   };
 
   return (

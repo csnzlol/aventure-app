@@ -24,7 +24,7 @@ export default function AccountSettings() {
           }
         }
       } catch (error) {
-        console.error('Failed to fetch user data:', error);
+        console.error('Fout bij het ophalen van gebruikersgegevens:', error);
       }
     };
 

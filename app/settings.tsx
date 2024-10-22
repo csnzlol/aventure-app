@@ -21,7 +21,7 @@ export default function Settings() {
           setProfileImage(savedImage);
         }
       } catch (error) {
-        console.error('Failed to load profile image:', error);
+        console.error('Profielafbeelding niet geladen:', error);
       }
     };
 
@@ -34,12 +34,12 @@ export default function Settings() {
           if (response.ok && data.name) {
             setUserName(data.name); // Stel de gebruikersnaam in vanuit de API-respons.
           } else {
-            setUserName('Unknown User'); // Terugvaloptie als de API geen naam retourneert.
+            setUserName('Onbekende gebruiker'); // Terugvaloptie als de API geen naam retourneert.
           }
         }
       } catch (error) {
-        console.error('Failed to fetch user data:', error);
-        setUserName('Error fetching name'); // Fout afhandeling
+        console.error('Fout bij het ophalen van gebruikersgegevens:', error);
+        setUserName('Fout bij het ophalen van naam'); // Fout afhandeling
       }
     };
 
@@ -72,12 +72,12 @@ export default function Settings() {
 
       setProfileImage(newPath);
       await AsyncStorage.setItem('profileImage', newPath);
-      console.log('Image saved locally:', newPath);
+      console.log('Afbeelding lokaal opgeslagen:', newPath);
     }
   };
 
   const handleLogout = () => {
-    console.log('User logged out');
+    console.log('Gebruiker uitgelogd');
     router.push('/login');
   };
 

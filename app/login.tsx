@@ -24,13 +24,13 @@ export default function LoginScreen() {
         if (data.message === 'Login successful') {
           console.log('Login successful');
 
-          // Store the email in AsyncStorage
+          // Sla de e-mail op in AsyncStorage
           await AsyncStorage.setItem('user_email', email);
 
-          // Redirect to main page after login
+          // Redirect naar hoofdpagina na inloggen
           router.push('/home');
         } else {
-          console.log(data.message); // Show error message
+          console.log(data.message); // Toon error melding in de console
         }
       })
       .catch(error => {
@@ -73,7 +73,7 @@ export default function LoginScreen() {
             <Text style={styles.loginButtonText}>LOG IN</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => console.log('Forgot password clicked')}>
+          <TouchableOpacity onPress={() => console.log('Wachtwoord vergeten klik')}>
             <Text style={styles.forgotPasswordText}>Wachtwoord vergeten?</Text>
           </TouchableOpacity>
         </View>

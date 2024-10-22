@@ -11,7 +11,7 @@ export default function Settings({ navigation }: Props) {
 
   // Uitlogfunctie
   const handleLogout = () => {
-    console.log('User logged out');
+    console.log('Gebruiker uitgelogd');
     navigation.replace('Login'); // Vervang 'Login' met de naam van je inlogpagina
   };
 
