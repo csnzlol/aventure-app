@@ -17,7 +17,7 @@ export default function PrivacyScreen() {
           setUserEmail(email); // Stel het e-mailadres van de gebruiker in de state in.
         }
       } catch (error) {
-        console.error('Failed to retrieve user email:', error);
+        console.error('Mislukt bij het ophalen van gebruikersemail:', error);
       }
     };
 
@@ -54,10 +54,10 @@ export default function PrivacyScreen() {
       
       console.log('API Response:', data); // Log de volledige API-respons in de console.
 
-      // Direct user redirection if the account deletion is successful
+      // Directe omleiding van gebruikers als de accountverwijdering is geslaagd
       if (data.success) {
-        console.log('Account successfully deleted. Redirecting to register page...');
-        router.push('/register'); // Redirect naar de registratiepagina na het verwijderen van het account.
+        console.log('Account succesvol verwijderd. Doorverwezen naar de registratiepagina...');
+        router.push('/register'); // Redirect to registration page after account deletion.
       } else {
         Alert.alert('Fout', data.message || 'Er is iets misgegaan. Probeer het later opnieuw.');
       }

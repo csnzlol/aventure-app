@@ -27,7 +27,7 @@ export default function BMICalculator() {
     const weightInKg = parseFloat(weight);
 
     if (!heightInMeters || !weightInKg) {
-      Alert.alert('Error', 'Please enter valid height and weight.');
+      Alert.alert('Error', 'Voer een geldige lengte en gewicht in.');
       return;
     }
 
@@ -38,7 +38,7 @@ export default function BMICalculator() {
   // Function to save BMI to the database
   const saveBMI = async () => {
     if (!bmi || !email) {
-      Alert.alert('Error', 'BMI not calculated or user not logged in.');
+      Alert.alert('Error', 'BMI niet berekend of gebruiker niet ingelogd.');
       return;
     }
 
@@ -58,13 +58,13 @@ export default function BMICalculator() {
 
       const data = await response.json();
       if (data.success) {
-        Alert.alert('Success', 'BMI saved successfully!');
+        Alert.alert('Success', 'BMI succesvol opgeslagen!');
       } else {
-        Alert.alert('Error', data.message || 'Failed to save BMI');
+        Alert.alert('Error', data.message || 'BMI kon niet opgeslagen worden');
       }
     } catch (error) {
-      console.error('Error saving BMI:', error);
-      Alert.alert('Error', 'Failed to save BMI');
+      console.error('Fout bij het opslaan van BMI:', error);
+      Alert.alert('Error', 'BMI kon niet opgeslagen worden');
     }
   };
 

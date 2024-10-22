@@ -29,8 +29,8 @@ export default function RegisterScreen() {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message === 'User registered successfully') {
-          console.log('Registration successful');
+        if (data.message === 'Gebruiker succesvol geregistreerd') {
+          console.log('Succesvolle registratie');
           router.push('/login'); // Redirect naar login
         } else {
           console.log(data.message); // Toon foutmelding
@@ -71,7 +71,7 @@ export default function RegisterScreen() {
             autoCapitalize="none"
           />
 
-          {/* Password field */}
+          {/* Password veld */}
           <TextInput
             style={styles.input}
             placeholder="Wachtwoord"
@@ -81,7 +81,7 @@ export default function RegisterScreen() {
             secureTextEntry
           />
 
-          {/* Confirm Password field */}
+          {/* Confirm wachtwoord veld */}
           <TextInput
             style={styles.input}
             placeholder="Herhaal Wachtwoord"
@@ -99,7 +99,7 @@ export default function RegisterScreen() {
             <Text style={styles.registerButtonText}>REGISTREER</Text>
           </TouchableOpacity>
 
-          {/* Go back to login */}
+          {/* Terug naar login */}
           <TouchableOpacity onPress={() => router.push('/login')}>
             <Text style={styles.backToLoginText}>Terug naar inloggen</Text>
           </TouchableOpacity>
